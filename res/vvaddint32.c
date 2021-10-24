@@ -1,6 +1,7 @@
-#include <stdio.h>
+#include <stddef.h>
+#include <stdint.h>
 
-void vvaddint32(size_t n, const int*x, const int*y, int*z);
+void vvaddint32(size_t n, const uint32_t x[], const uint32_t y[], uint32_t z[]);
 
 int main() {
   int x[100] = {};

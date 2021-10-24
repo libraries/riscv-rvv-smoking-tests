@@ -1,3 +1,6 @@
 res/vvaddint32
 res/vvaddint32.dump
 res/vvaddint32.o
+res/vvaddint256
+res/vvaddint256.dump
+res/vvaddint256.o
