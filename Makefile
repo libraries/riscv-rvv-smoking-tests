@@ -1,5 +1,10 @@
 RISCV=${HOME}/app/riscv_rvv
 
+res/viaddint256:
+	cargo run --bin rvv-as -- res/viaddint256.s > res/viaddint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/viaddint256_emit.s -o res/viaddint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/viaddint256.c -o res/viaddint256 res/viaddint256.o
+
 res/vvaddint32:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvaddint32.s -o res/vvaddint32.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvaddint32.c -o res/vvaddint32 res/vvaddint32.o
@@ -20,6 +25,7 @@ clean:
 	rm -f res/*.dump
 	rm -f res/*.o
 	rm -f res/*_emit.s
+	rm -f res/viaddint256
 	rm -f res/vvaddint32
 	rm -f res/vvaddint256
 	rm -f res/vxaddint256
