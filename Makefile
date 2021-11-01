@@ -1,4 +1,5 @@
 RISCV=${HOME}/app/riscv_rvv
+RISCV_RUNNER=~/src/ckb-vm/target/debug/examples/int64
 
 res/viaddint256:
 	cargo run --bin rvv-as -- res/viaddint256.s > res/viaddint256_emit.s
@@ -50,6 +51,30 @@ res/vxsubint256:
 	cargo run --bin rvv-as -- res/vxsubint256.s > res/vxsubint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxsubint256_emit.s -o res/vxsubint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxsubint256.c -o res/vxsubint256 res/vxsubint256.o
+
+build: \
+	clean \
+	res/viaddint256 \
+	res/virsubint256 \
+	res/vvaddint32 \
+	res/vvaddint256 \
+	res/vvmulint256 \
+	res/vvsubint256 \
+	res/vxaddint256 \
+	res/vxmulint256 \
+	res/vxrsubint256 \
+	res/vxsubint256
+	${RISCV_RUNNER} res/viaddint256
+	${RISCV_RUNNER} res/virsubint256
+	${RISCV_RUNNER} res/vvaddint32
+	${RISCV_RUNNER} res/vvaddint256
+	${RISCV_RUNNER} res/vvmulint256
+	${RISCV_RUNNER} res/vvsubint256
+	${RISCV_RUNNER} res/vxaddint256
+	${RISCV_RUNNER} res/vxmulint256
+	${RISCV_RUNNER} res/vxrsubint256
+	${RISCV_RUNNER} res/vxsubint256
+
 
 clean:
 	rm -f res/*.dump
