@@ -1,11 +1,6 @@
     .text
     .balign 4
     .global vxrsubint256
-    # void vxrsubint256(size_t n, const int*x, const int y, int*z)
-    # { for (size_t i=0; i<n; i++) { z[i]=y-x[i]; } }
-    #
-    # a0 = n, a1 = x, a2 = y, a3 = z
-    # Non-vector instructions are indented
 vxrsubint256:
     vsetvli t0, a0, e256, m1, ta, ma
     vle256.v v0, (a1)

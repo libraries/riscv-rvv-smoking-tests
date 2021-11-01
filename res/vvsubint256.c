@@ -7,19 +7,16 @@ int main() {
   uint64_t x[1][4] = {{0x1234567812345678, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff}};
   uint64_t y[1][4] = {{0x1234567812345670, 0xffffffffffffffff, 0xffffffffffffffff, 0x0000000000000000}};
   uint64_t z[1][4];
+  uint64_t e[1][4] = {{0x0000000000000008, 0x0000000000000000, 0x0000000000000000, 0xffffffffffffffff}};
   vvsubint256(1, x, y, z);
 
-  if (z[0][0] != 0x0000000000000008) {
-    return 1;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (z[i][j] != e[i][j]) {
+        return 1;
+      }
+    }
   }
-  if (z[0][1] != 0x0000000000000000) {
-    return 1;
-  }
-  if (z[0][2] != 0x0000000000000000) {
-    return 1;
-  }
-  if (z[0][3] != 0xffffffffffffffff) {
-    return 1;
-  }
+
   return 0;
 }

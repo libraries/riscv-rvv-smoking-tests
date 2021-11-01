@@ -1,11 +1,6 @@
     .text
     .balign 4
     .global virsubint256
-    # void virsubint256(size_t n, const int*x, int*y)
-    # { for (size_t i=0; i<n; i++) { y[i]=0-x[i]; } }
-    #
-    # a0 = n, a1 = x, a2 = y
-    # Non-vector instructions are indented
 virsubint256:
     vsetvli t0, a0, e256, m1, ta, ma
     vle256.v v0, (a1)

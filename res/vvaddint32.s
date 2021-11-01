@@ -1,12 +1,6 @@
     .text
     .balign 4
     .global vvaddint32
-    # vector-vector add routine of 32-bit integers
-    # void vvaddint32(size_t n, const int*x, const int*y, int*z)
-    # { for (size_t i=0; i<n; i++) { z[i]=x[i]+y[i]; } }
-    #
-    # a0 = n, a1 = x, a2 = y, a3 = z
-    # Non-vector instructions are indented
 vvaddint32:
     vsetvli t0, a0, e32, ta, ma  # Set vector length based on 32-bit vectors
     vle32.v v0, (a1)             # Get first vector

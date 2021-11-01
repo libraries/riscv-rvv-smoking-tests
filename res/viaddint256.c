@@ -9,31 +9,19 @@ int main() {
     {0xfffffffffffffffe, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff}
   };
   uint64_t y[2][4];
+  uint64_t e[2][4] = {
+    {0x0000000000000000, 0x0000000000000002, 0x0000000000000003, 0x0000000000000004},
+    {0xfffffffffffffffd, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff}
+  }
   viaddint256(2, x, y);
 
-  if (y[0][0] != 0x0000000000000000) {
-    return 1;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (y[i][j] != e[i][j]) {
+        return 1;
+      }
+    }
   }
-  if (y[0][1] != 0x0000000000000002) {
-    return 1;
-  }
-  if (y[0][2] != 0x0000000000000003) {
-    return 1;
-  }
-  if (y[0][3] != 0x0000000000000004) {
-    return 1;
-  }
-  if (y[1][0] != 0xfffffffffffffffd) {
-    return 1;
-  }
-  if (y[1][1] != 0xffffffffffffffff) {
-    return 1;
-  }
-  if (y[1][2] != 0xffffffffffffffff) {
-    return 1;
-  }
-  if (y[1][3] != 0xffffffffffffffff) {
-    return 1;
-  }
+
   return 0;
 }

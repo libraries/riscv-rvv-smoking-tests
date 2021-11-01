@@ -21,6 +21,11 @@ res/vvaddint256:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvaddint256_emit.s -o res/vvaddint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvaddint256.c -o res/vvaddint256 res/vvaddint256.o
 
+res/vvmulint256:
+	cargo run --bin rvv-as -- res/vvmulint256.s > res/vvmulint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvmulint256_emit.s -o res/vvmulint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvmulint256.c -o res/vvmulint256 res/vvmulint256.o
+
 res/vvsubint256:
 	cargo run --bin rvv-as -- res/vvsubint256.s > res/vvsubint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvsubint256_emit.s -o res/vvsubint256.o
@@ -30,6 +35,11 @@ res/vxaddint256:
 	cargo run --bin rvv-as -- res/vxaddint256.s > res/vxaddint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxaddint256_emit.s -o res/vxaddint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxaddint256.c -o res/vxaddint256 res/vxaddint256.o
+
+res/vxmulint256:
+	cargo run --bin rvv-as -- res/vxmulint256.s > res/vxmulint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxmulint256_emit.s -o res/vxmulint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxmulint256.c -o res/vxmulint256 res/vxmulint256.o
 
 res/vxrsubint256:
 	cargo run --bin rvv-as -- res/vxrsubint256.s > res/vxrsubint256_emit.s
@@ -49,7 +59,9 @@ clean:
 	rm -f res/virsubint256
 	rm -f res/vvaddint32
 	rm -f res/vvaddint256
+	rm -f res/vvmulint256
 	rm -f res/vvsubint256
 	rm -f res/vxaddint256
+	rm -f res/vxmulint256
 	rm -f res/vxrsubint256
 	rm -f res/vxsubint256

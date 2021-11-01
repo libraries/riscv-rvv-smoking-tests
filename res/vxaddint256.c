@@ -10,31 +10,19 @@ int main() {
   };
   uint64_t y = 1;
   uint64_t z[2][4];
+  uint64_t e[2][4] = {
+    {0x0000000000000002, 0x0000000000000002, 0x0000000000000003, 0x0000000000000004},
+    {0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff}
+  };
   vxaddint256(2, x, y, z);
 
-  if (z[0][0] != 0x0000000000000002) {
-    return 1;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (z[i][j] != e[i][j]) {
+        return 1;
+      }
+    }
   }
-  if (z[0][1] != 0x0000000000000002) {
-    return 1;
-  }
-  if (z[0][2] != 0x0000000000000003) {
-    return 1;
-  }
-  if (z[0][3] != 0x0000000000000004) {
-    return 1;
-  }
-  if (z[1][0] != 0xffffffffffffffff) {
-    return 1;
-  }
-  if (z[1][1] != 0xffffffffffffffff) {
-    return 1;
-  }
-  if (z[1][2] != 0xffffffffffffffff) {
-    return 1;
-  }
-  if (z[1][3] != 0xffffffffffffffff) {
-    return 1;
-  }
+
   return 0;
 }
