@@ -11,14 +11,13 @@ int main() {
     y[i] = 99 - i;
   }
   int z[100];
+
   vvaddint32(100, x, y, z);
 
-  int s = 0;
   for (int i = 0; i < 100; i++) {
-    s += z[i];
-  }
-  if (s != 9900) {
-    return 1;
+    if (z[i] != 99) {
+      return 1;
+    }
   }
   return 0;
 }
