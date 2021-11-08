@@ -90,3 +90,6 @@ clean:
 	rm -f res/vxmulint256
 	rm -f res/vxrsubint256
 	rm -f res/vxsubint256
+
+fmt:
+	clang-format --style="{ColumnLimit: 120}" -i ./res/*.c
