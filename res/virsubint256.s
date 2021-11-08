@@ -7,7 +7,7 @@ virsubint256:
       sub a0, a0, t0
       slli t0, t0, 5
       add a1, a1, t0
-    vrsub.vi v1, v0, 0
+    vrsub.vi v1, v0, -2
     vse256.v v1, (a2)
       add a2, a2, t0
       bnez a0, virsubint256
