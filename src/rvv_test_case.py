@@ -137,8 +137,12 @@ U256 = typing.Any
 
 class U256:
 
-    def __init__(self, x):
-        self.int = x % (1 << 256)
+    mask = (1 << 256) - 1
+
+    def __init__(self, x: int):
+        assert x >= 0
+        assert x < (1 << 256)
+        self.int = x
         a = (x >> 0x00) & 0xffffffffffffffff
         b = (x >> 0x40) & 0xffffffffffffffff
         c = (x >> 0x80) & 0xffffffffffffffff
@@ -165,7 +169,14 @@ class U256:
         return U256(a | b | c | d)
 
     def __add__(self, other: U256) -> U256:
-        return U256(self.int + other.int)
+        return U256((self.int + other.int) & U256.mask)
+
+    def __sub__(self, other: U256) -> U256:
+        x = self.int - other.int
+        if x < 0:
+            x += 1
+            x += U256.mask
+        return U256(x)
 
 
 def print_u256_array(u: typing.List[U256]):
@@ -174,8 +185,8 @@ def print_u256_array(u: typing.List[U256]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
-r = [lhs[i] + U256(1) for i in range(100)]
+r = [lhs[i] - U256(0xffffffffffffffff) for i in range(100)]
 
 print_u256_array(lhs)
-# print_u256_array(rhs)
+print_u256_array(rhs)
 print_u256_array(r)
