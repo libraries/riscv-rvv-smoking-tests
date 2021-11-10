@@ -181,14 +181,21 @@ class U256:
     def __mul__(self, other: U256) -> U256:
         return U256((self.int * other.int) & U256.mask)
 
+    def __floordiv__(self, other: U256) -> U256:
+        if other.int == 0:
+            return U256(U256.mask)
+        return U256(self.int // other.int)
+
+    __truediv__ = __floordiv__
+
 
 def print_u256_array(u: typing.List[U256]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
 
 
 lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U256.from_rand() for _ in range(100)]
-r = [lhs[i] * U256(2) for i in range(100)]
+rhs = [U256(random.choice(best_numbers)) for _ in range(100)]
+r = [lhs[i] / rhs[i] for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)

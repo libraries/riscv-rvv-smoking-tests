@@ -7,6 +7,7 @@ res/viaddint256
 res/virsubint256
 res/vvaddint32
 res/vvaddint256
+res/vvdivuint256
 res/vvmulint256
 res/vvsubint256
 res/vxaddint256
