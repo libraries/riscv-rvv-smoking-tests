@@ -32,6 +32,11 @@ res/vvmulint256:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvmulint256_emit.s -o res/vvmulint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvmulint256.c -o res/vvmulint256 res/vvmulint256.o
 
+res/vvremuint256:
+	cargo run --bin rvv-as -- res/vvremuint256.s > res/vvremuint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvremuint256_emit.s -o res/vvremuint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvremuint256.c -o res/vvremuint256 res/vvremuint256.o
+
 res/vvsubint256:
 	cargo run --bin rvv-as -- res/vvsubint256.s > res/vvsubint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvsubint256_emit.s -o res/vvsubint256.o
@@ -52,6 +57,11 @@ res/vxmulint256:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxmulint256_emit.s -o res/vxmulint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxmulint256.c -o res/vxmulint256 res/vxmulint256.o
 
+res/vxremuint256:
+	cargo run --bin rvv-as -- res/vxremuint256.s > res/vxremuint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxremuint256_emit.s -o res/vxremuint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxremuint256.c -o res/vxremuint256 res/vxremuint256.o
+
 res/vxrsubint256:
 	cargo run --bin rvv-as -- res/vxrsubint256.s > res/vxrsubint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxrsubint256_emit.s -o res/vxrsubint256.o
@@ -70,10 +80,12 @@ build: \
 	res/vvaddint256 \
 	res/vvdivuint256 \
 	res/vvmulint256 \
+	res/vvremuint256 \
 	res/vvsubint256 \
 	res/vxaddint256 \
 	res/vxdivuint256 \
 	res/vxmulint256 \
+	res/vxremuint256 \
 	res/vxrsubint256 \
 	res/vxsubint256
 	${RISCV_RUNNER} res/viaddint256
@@ -82,10 +94,12 @@ build: \
 	${RISCV_RUNNER} res/vvaddint256
 	${RISCV_RUNNER} res/vvdivuint256
 	${RISCV_RUNNER} res/vvmulint256
+	${RISCV_RUNNER} res/vvremuint256
 	${RISCV_RUNNER} res/vvsubint256
 	${RISCV_RUNNER} res/vxaddint256
 	${RISCV_RUNNER} res/vxdivuint256
 	${RISCV_RUNNER} res/vxmulint256
+	${RISCV_RUNNER} res/vxremuint256
 	${RISCV_RUNNER} res/vxrsubint256
 	${RISCV_RUNNER} res/vxsubint256
 
@@ -100,10 +114,12 @@ clean:
 	rm -f res/vvaddint256
 	rm -f res/vvdivuint256
 	rm -f res/vvmulint256
+	rm -f res/vvremuint256
 	rm -f res/vvsubint256
 	rm -f res/vxaddint256
 	rm -f res/vxdivuint256
 	rm -f res/vxmulint256
+	rm -f res/vxremuint256
 	rm -f res/vxrsubint256
 	rm -f res/vxsubint256
 

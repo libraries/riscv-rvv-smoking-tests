@@ -9,9 +9,11 @@ res/vvaddint32
 res/vvaddint256
 res/vvdivuint256
 res/vvmulint256
+res/vvremuint256
 res/vvsubint256
 res/vxaddint256
 res/vxdivuint256
 res/vxmulint256
+res/vxremuint256
 res/vxrsubint256
 res/vxsubint256

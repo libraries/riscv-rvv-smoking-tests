@@ -188,6 +188,11 @@ class U256:
 
     __truediv__ = __floordiv__
 
+    def __mod__(self, other: U256) -> U256:
+        if other.int == 0:
+            return U256(self.int)
+        return U256(self.int % other.int)
+
 
 def print_u256_array(u: typing.List[U256]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
@@ -195,7 +200,7 @@ def print_u256_array(u: typing.List[U256]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256(random.choice(best_numbers)) for _ in range(100)]
-r = [lhs[i] / U256(3) for i in range(100)]
+r = [lhs[i] % U256(147258369) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
