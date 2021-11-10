@@ -140,8 +140,8 @@ class U256:
     mask = (1 << 256) - 1
 
     def __init__(self, x: int):
-        assert x >= 0
-        assert x < (1 << 256)
+        assert x >= 0, x
+        assert x < (1 << 256), x
         self.int = x
         a = (x >> 0x00) & 0xffffffffffffffff
         b = (x >> 0x40) & 0xffffffffffffffff
@@ -193,14 +193,41 @@ class U256:
             return U256(self.int)
         return U256(self.int % other.int)
 
+    def __lshift__(self, other: U256) -> U256:
+        if other.int >= 256:
+            return U256(0)
+        return U256((self.int << other.int) & U256.mask)
+
+    def __rshift__(self, other: U256) -> U256:
+        if other.int >= 256:
+            return U256(0)
+        return U256(self.int >> other.int)
+
+    def __ashift__(self, other: U256) -> U256:
+        i = 0
+        if self.int >= (1 << 255):
+            i = self.int - (1 << 256)
+        else:
+            i = self.int
+
+        if other.int >= 256:
+            if i >= 0:
+                return U256(0)
+            else:
+                return U256(U256.mask)
+        else:
+            a = self.int >> other.int
+            b = ((1 << other.int) - 1) << (256 - other.int)
+            U256(a | b)
+
 
 def print_u256_array(u: typing.List[U256]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
 
 
 lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U256(random.choice(best_numbers)) for _ in range(100)]
-r = [lhs[i] % U256(147258369) for i in range(100)]
+rhs = [U256.from_rand() for _ in range(100)]
+r = [lhs[i] << rhs[i] for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
