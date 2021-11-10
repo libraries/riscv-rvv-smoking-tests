@@ -16,6 +16,11 @@ res/visllint256:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/visllint256_emit.s -o res/visllint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/visllint256.c -o res/visllint256 res/visllint256.o
 
+res/visraint256:
+	cargo run --bin rvv-as -- res/visraint256.s > res/visraint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/visraint256_emit.s -o res/visraint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/visraint256.c -o res/visraint256 res/visraint256.o
+
 res/visrlint256:
 	cargo run --bin rvv-as -- res/visrlint256.s > res/visrlint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/visrlint256_emit.s -o res/visrlint256.o
@@ -51,6 +56,11 @@ res/vvsllint256:
 	cargo run --bin rvv-as -- res/vvsllint256.s > res/vvsllint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvsllint256_emit.s -o res/vvsllint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvsllint256.c -o res/vvsllint256 res/vvsllint256.o
+
+res/vvsraint256:
+	cargo run --bin rvv-as -- res/vvsraint256.s > res/vvsraint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvsraint256_emit.s -o res/vvsraint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvsraint256.c -o res/vvsraint256 res/vvsraint256.o
 
 res/vvsrlint256:
 	cargo run --bin rvv-as -- res/vvsrlint256.s > res/vvsrlint256_emit.s
@@ -92,6 +102,11 @@ res/vxsllint256:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxsllint256_emit.s -o res/vxsllint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxsllint256.c -o res/vxsllint256 res/vxsllint256.o
 
+res/vxsraint256:
+	cargo run --bin rvv-as -- res/vxsraint256.s > res/vxsraint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxsraint256_emit.s -o res/vxsraint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/vxsraint256.c -o res/vxsraint256 res/vxsraint256.o
+
 res/vxsrlint256:
 	cargo run --bin rvv-as -- res/vxsrlint256.s > res/vxsrlint256_emit.s
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vxsrlint256_emit.s -o res/vxsrlint256.o
@@ -107,6 +122,7 @@ build: \
 	res/viaddint256 \
 	res/virsubint256 \
 	res/visllint256 \
+	res/visraint256 \
 	res/visrlint256 \
 	res/vvaddint32 \
 	res/vvaddint256 \
@@ -114,6 +130,7 @@ build: \
 	res/vvmulint256 \
 	res/vvremuint256 \
 	res/vvsllint256 \
+	res/vvsraint256 \
 	res/vvsrlint256 \
 	res/vvsubint256 \
 	res/vxaddint256 \
@@ -122,11 +139,13 @@ build: \
 	res/vxremuint256 \
 	res/vxrsubint256 \
 	res/vxsllint256 \
+	res/vxsraint256 \
 	res/vxsrlint256 \
 	res/vxsubint256
 	${RISCV_RUNNER} res/viaddint256
 	${RISCV_RUNNER} res/virsubint256
 	${RISCV_RUNNER} res/visllint256
+	${RISCV_RUNNER} res/visraint256
 	${RISCV_RUNNER} res/visrlint256
 	${RISCV_RUNNER} res/vvaddint32
 	${RISCV_RUNNER} res/vvaddint256
@@ -134,6 +153,7 @@ build: \
 	${RISCV_RUNNER} res/vvmulint256
 	${RISCV_RUNNER} res/vvremuint256
 	${RISCV_RUNNER} res/vvsllint256
+	${RISCV_RUNNER} res/vvsraint256
 	${RISCV_RUNNER} res/vvsrlint256
 	${RISCV_RUNNER} res/vvsubint256
 	${RISCV_RUNNER} res/vxaddint256
@@ -142,6 +162,7 @@ build: \
 	${RISCV_RUNNER} res/vxremuint256
 	${RISCV_RUNNER} res/vxrsubint256
 	${RISCV_RUNNER} res/vxsllint256
+	${RISCV_RUNNER} res/vxsraint256
 	${RISCV_RUNNER} res/vxsrlint256
 	${RISCV_RUNNER} res/vxsubint256
 
@@ -153,6 +174,7 @@ clean:
 	rm -f res/viaddint256
 	rm -f res/virsubint256
 	rm -f res/visllint256
+	rm -f res/visraint256
 	rm -f res/visrlint256
 	rm -f res/vvaddint32
 	rm -f res/vvaddint256
@@ -160,6 +182,7 @@ clean:
 	rm -f res/vvmulint256
 	rm -f res/vvremuint256
 	rm -f res/vvsllint256
+	rm -f res/vvsraint256
 	rm -f res/vvsrlint256
 	rm -f res/vvsubint256
 	rm -f res/vxaddint256
@@ -168,6 +191,7 @@ clean:
 	rm -f res/vxremuint256
 	rm -f res/vxrsubint256
 	rm -f res/vxsllint256
+	rm -f res/vxsraint256
 	rm -f res/vxsrlint256
 	rm -f res/vxsubint256
 

@@ -204,21 +204,20 @@ class U256:
         return U256(self.int >> other.int)
 
     def __ashift__(self, other: U256) -> U256:
-        i = 0
-        if self.int >= (1 << 255):
-            i = self.int - (1 << 256)
-        else:
-            i = self.int
+        is_positive = self.int < (1 << 255)
 
         if other.int >= 256:
-            if i >= 0:
+            if is_positive:
                 return U256(0)
             else:
                 return U256(U256.mask)
         else:
-            a = self.int >> other.int
-            b = ((1 << other.int) - 1) << (256 - other.int)
-            U256(a | b)
+            if is_positive:
+                return U256(self.int >> other.int)
+            else:
+                a = self.int >> other.int
+                b = ((1 << other.int) - 1) << (256 - other.int)
+                return U256(a | b)
 
 
 def print_u256_array(u: typing.List[U256]):
@@ -226,8 +225,8 @@ def print_u256_array(u: typing.List[U256]):
 
 
 lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U256(random.randint(0, 256)) for _ in range(100)]
-r = [lhs[i] >> rhs[i] for i in range(100)]
+rhs = [U256(random.randint(0, 255)) for _ in range(100)]
+r = [lhs[i].__ashift__(U256(150)) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)

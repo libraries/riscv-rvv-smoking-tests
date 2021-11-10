@@ -6,6 +6,7 @@ res/*.o
 res/viaddint256
 res/virsubint256
 res/visllint256
+res/visraint256
 res/visrlint256
 res/vvaddint32
 res/vvaddint256
@@ -13,6 +14,7 @@ res/vvdivuint256
 res/vvmulint256
 res/vvremuint256
 res/vvsllint256
+res/vvsraint256
 res/vvsrlint256
 res/vvsubint256
 res/vxaddint256
@@ -21,5 +23,6 @@ res/vxmulint256
 res/vxremuint256
 res/vxrsubint256
 res/vxsllint256
+res/vxsraint256
 res/vxsrlint256
 res/vxsubint256
