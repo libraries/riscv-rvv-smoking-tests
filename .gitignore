@@ -17,4 +17,5 @@ res/vxdivuint256
 res/vxmulint256
 res/vxremuint256
 res/vxrsubint256
+res/vxsllint256
 res/vxsubint256

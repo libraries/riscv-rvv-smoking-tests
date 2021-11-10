@@ -227,7 +227,7 @@ def print_u256_array(u: typing.List[U256]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
-r = [lhs[i] << rhs[i] for i in range(100)]
+r = [lhs[i] << U256(1) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
