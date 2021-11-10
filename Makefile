@@ -11,6 +11,11 @@ res/virsubint256:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/virsubint256_emit.s -o res/virsubint256.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/virsubint256.c -o res/virsubint256 res/virsubint256.o
 
+res/visllint256:
+	cargo run --bin rvv-as -- res/visllint256.s > res/visllint256_emit.s
+	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/visllint256_emit.s -o res/visllint256.o
+	${RISCV}/bin/riscv64-unknown-elf-gcc res/visllint256.c -o res/visllint256 res/visllint256.o
+
 res/vvaddint32:
 	${RISCV}/bin/riscv64-unknown-elf-gcc -c res/vvaddint32.s -o res/vvaddint32.o
 	${RISCV}/bin/riscv64-unknown-elf-gcc res/vvaddint32.c -o res/vvaddint32 res/vvaddint32.o
@@ -86,6 +91,7 @@ build: \
 	clean \
 	res/viaddint256 \
 	res/virsubint256 \
+	res/visllint256 \
 	res/vvaddint32 \
 	res/vvaddint256 \
 	res/vvdivuint256 \
@@ -102,6 +108,7 @@ build: \
 	res/vxsubint256
 	${RISCV_RUNNER} res/viaddint256
 	${RISCV_RUNNER} res/virsubint256
+	${RISCV_RUNNER} res/visllint256
 	${RISCV_RUNNER} res/vvaddint32
 	${RISCV_RUNNER} res/vvaddint256
 	${RISCV_RUNNER} res/vvdivuint256
@@ -124,6 +131,7 @@ clean:
 	rm -f res/*_emit.s
 	rm -f res/viaddint256
 	rm -f res/virsubint256
+	rm -f res/visllint256
 	rm -f res/vvaddint32
 	rm -f res/vvaddint256
 	rm -f res/vvdivuint256
