@@ -153,8 +153,40 @@ fn conv(line: &str) {
                 println!("{}", line);
             }
         }
+        "vle128.v" => {
+            let mut code = 0b000_100_0_00000_00000_000_00000_0000111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            code |= 0b1 << 25;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
         "vle256.v" => {
-            let mut code = 0b000_100_0_00000_00000_001_00000_0000111;
+            let mut code = 0b000_100_0_00000_00000_101_00000_0000111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            code |= 0b1 << 25;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vle512.v" => {
+            let mut code = 0b000_100_0_00000_00000_110_00000_0000111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            code |= 0b1 << 25;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vle1024.v" => {
+            let mut code = 0b000_100_0_00000_00000_111_00000_0000111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            code |= 0b1 << 25;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vse128.v" => {
+            let mut code = 0b000_100_0_00000_00000_000_00000_0100111;
             code |= (vegn(args[0]) as u32) << 7;
             code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
             code |= 0b1 << 25;
@@ -162,7 +194,23 @@ fn conv(line: &str) {
             println!("{}{}", indent, emit(code));
         }
         "vse256.v" => {
-            let mut code = 0b000_100_0_00000_00000_001_00000_0100111;
+            let mut code = 0b000_100_0_00000_00000_101_00000_0100111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            code |= 0b1 << 25;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vse512.v" => {
+            let mut code = 0b000_100_0_00000_00000_110_00000_0100111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            code |= 0b1 << 25;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vse1024.v" => {
+            let mut code = 0b000_100_0_00000_00000_111_00000_0100111;
             code |= (vegn(args[0]) as u32) << 7;
             code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
             code |= 0b1 << 25;
