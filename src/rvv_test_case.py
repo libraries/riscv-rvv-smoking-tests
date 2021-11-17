@@ -219,6 +219,24 @@ class U256:
                 b = ((1 << other.int) - 1) << (256 - other.int)
                 return U256(a | b)
 
+    def __lt__(self, other: U256) -> bool:
+        return self.int < other.int
+
+    def __gt__(self, other: U256) -> bool:
+        return self.int > other.int
+
+    def __le__(self, other: U256) -> bool:
+        return self.int <= other.int
+
+    def __ge__(self, other: U256) -> bool:
+        return self.int >= other.int
+
+    def __eq__(self, other: U256) -> bool:
+        return self.int == other.int
+
+    def __ne__(self, other: U256) -> bool:
+        return self.int != other.int
+
 
 def print_u256_array(u: typing.List[U256]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
@@ -229,7 +247,7 @@ rhs = [U256.from_rand() for _ in range(100)]
 for i in range(100):
     if i % 3 == 0:
         lhs[i] = U256(1)
-r = [U256(1) if lhs[i].int == 1 else U256(0) for i in range(100)]
+r = [U256(1) if lhs[i] != U256(1) else U256(0) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
