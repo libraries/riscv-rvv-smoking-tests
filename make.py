@@ -1,3 +1,4 @@
+import glob
 import sys
 import subprocess
 
@@ -14,6 +15,8 @@ c_entry = [
     'vmseq_vi',
     'vmseq_vv',
     'vmseq_vx',
+    'vmsltu_vv',
+    'vmsltu_vx',
     'vmsne_vi',
     'vmsne_vv',
     'vmsne_vx',
@@ -35,6 +38,9 @@ c_entry = [
     'vsub_vv',
     'vsub_vx',
 ]
+
+assert len(glob.glob('res/*.c')) == len(c_entry)
+
 
 for sub in sys.argv[1:]:
     if sub == 'build':
