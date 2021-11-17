@@ -228,8 +228,8 @@ lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
 for i in range(100):
     if i % 3 == 0:
-        rhs[i] = lhs[i]
-r = [U256(1) if lhs[i].int == rhs[i].int else U256(0) for i in range(100)]
+        lhs[i] = U256(12345678)
+r = [U256(1) if lhs[i].int == 12345678 else U256(0) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
