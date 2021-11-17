@@ -115,16 +115,6 @@ fn conv(line: &str) {
             code |= 0b0_00000000000_00000_111_00000_1010111;
             code |= (regn(args[0]) as u32) << 7;
             code |= (regn(args[1]) as u32) << 15;
-            code |= match args[3] {
-                "mf8" => 0b101,
-                "mf4" => 0b110,
-                "mf2" => 0b111,
-                "m1" => 0b000,
-                "m2" => 0b001,
-                "m4" => 0b010,
-                "m8" => 0b011,
-                _ => unreachable!(),
-            } << 20;
             code |= match args[2] {
                 "e8" => 0b000,
                 "e16" => 0b001,
@@ -136,6 +126,16 @@ fn conv(line: &str) {
                 "e1024" => 0b111,
                 _ => unreachable!(),
             } << 23;
+            code |= match args[3] {
+                "mf8" => 0b101,
+                "mf4" => 0b110,
+                "mf2" => 0b111,
+                "m1" => 0b000,
+                "m2" => 0b001,
+                "m4" => 0b010,
+                "m8" => 0b011,
+                _ => unreachable!(),
+            } << 20;
             code |= match args[4] {
                 "ta" => 0b1,
                 "tu" => 0b0,

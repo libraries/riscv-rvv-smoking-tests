@@ -225,8 +225,11 @@ def print_u256_array(u: typing.List[U256]):
 
 
 lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U256(random.randint(0, 255)) for _ in range(100)]
-r = [lhs[i].__ashift__(U256(150)) for i in range(100)]
+rhs = [U256.from_rand() for _ in range(100)]
+for i in range(100):
+    if i % 3 == 0:
+        rhs[i] = lhs[i]
+r = [U256(1) if lhs[i].int == rhs[i].int else U256(0) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
