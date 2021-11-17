@@ -11,6 +11,7 @@ c_entry = [
     'vadd_vx',
     'vdivu_vv',
     'vdivu_vx',
+    'vmseq_vi',
     'vmseq_vv',
     'vmseq_vx',
     'vmul_vv',
