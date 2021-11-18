@@ -15,6 +15,8 @@ c_entry = [
     'vmseq_vi',
     'vmseq_vv',
     'vmseq_vx',
+    'vmsgtu_vv',
+    'vmsgtu_vx',
     'vmsltu_vv',
     'vmsltu_vx',
     'vmsne_vi',
