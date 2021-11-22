@@ -25,6 +25,7 @@ c_entry = [
     'vmul_vv',
     'vmul_vx',
     'vremu_vv',
+    'vremu_vv_512',
     'vremu_vx',
     'vrsub_vi',
     'vrsub_vx',
