@@ -1,15 +1,2 @@
 target/
-
-res/*_emit.s
-res/*.dump
-res/*.o
-res/viaddint256
-res/virsubint256
-res/vvaddint32
-res/vvaddint256
-res/vvmulint256
-res/vvsubint256
-res/vxaddint256
-res/vxmulint256
-res/vxrsubint256
-res/vxsubint256
+bin/
