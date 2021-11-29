@@ -244,10 +244,10 @@ def print_u256_array(u: typing.List[U256]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
-# for i in range(100):
-#     if i % 3 == 0:
-#         lhs[i] = U256(lhs[i].int & 0xffffffffffffffff)
-r = [lhs[i] - U256(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) for i in range(100)]
+for i in range(100):
+    if i % 3 == 0:
+        lhs[i] = U256(lhs[i].int & 0xffffffffffffffff)
+r = [U256(1) if lhs[i] > U256(0x7fffffffffffffff) else U256(0) for i in range(100)]
 
 print_u256_array(lhs)
 print_u256_array(rhs)
