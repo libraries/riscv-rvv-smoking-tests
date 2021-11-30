@@ -133,6 +133,7 @@ best_numbers = [
 ]
 
 U256 = typing.Any
+U512 = typing.Any
 
 
 class U256:
@@ -150,7 +151,7 @@ class U256:
         self.u64 = [a, b, c, d]
 
     def __repr__(self):
-        return f'{{0x{self.u64[0]:016x}, 0x{self.u64[1]:016x}, 0x{self.u64[2]:016x}, 0x{self.u64[3]:016x}}}'
+        return '{' + ','.join([f'0x{i:016x}' for i in self.u64]) + '}'
 
     @classmethod
     def from_u64s(cls, u) -> U256:
@@ -238,17 +239,133 @@ class U256:
         return self.int != other.int
 
 
+class U512:
+
+    mask = (1 << 512) - 1
+
+    def __init__(self, x: int):
+        assert x >= 0, x
+        assert x < (1 << 512), x
+        self.int = x
+        a = (x >> 0x0000) & 0xffffffffffffffff
+        b = (x >> 0x0040) & 0xffffffffffffffff
+        c = (x >> 0x0080) & 0xffffffffffffffff
+        d = (x >> 0x00c0) & 0xffffffffffffffff
+        e = (x >> 0x0100) & 0xffffffffffffffff
+        f = (x >> 0x0140) & 0xffffffffffffffff
+        g = (x >> 0x0180) & 0xffffffffffffffff
+        h = (x >> 0x01c0) & 0xffffffffffffffff
+        self.u64 = [a, b, c, d, e, f, g, h]
+
+    def __repr__(self):
+        return '{' + ','.join([f'0x{i:016x}' for i in self.u64]) + '}'
+
+    @classmethod
+    def from_u64s(cls, u) -> U512:
+        a = u[0] << 0x0000
+        b = u[1] << 0x0040
+        c = u[2] << 0x0080
+        d = u[3] << 0x00c0
+        e = u[4] << 0x0100
+        f = u[5] << 0x0140
+        g = u[6] << 0x0180
+        h = u[7] << 0x01c0
+        return U512(a | b | c | d | e | f | g | h)
+
+    @classmethod
+    def from_rand(cls) -> U512:
+        a = random.choice(best_numbers) << 0x0000
+        b = random.choice(best_numbers) << 0x0040
+        c = random.choice(best_numbers) << 0x0080
+        d = random.choice(best_numbers) << 0x00c0
+        e = random.choice(best_numbers) << 0x0100
+        f = random.choice(best_numbers) << 0x0140
+        g = random.choice(best_numbers) << 0x0180
+        h = random.choice(best_numbers) << 0x01c0
+        return U512(a | b | c | d | e | f | g | h)
+
+    def __add__(self, other: U512) -> U512:
+        return U512((self.int + other.int) & U512.mask)
+
+    def __sub__(self, other: U512) -> U512:
+        x = self.int - other.int
+        if x < 0:
+            x += 1
+            x += U512.mask
+        return U512(x)
+
+    def __mul__(self, other: U512) -> U512:
+        return U512((self.int * other.int) & U512.mask)
+
+    def __floordiv__(self, other: U512) -> U512:
+        if other.int == 0:
+            return U512(U512.mask)
+        return U512(self.int // other.int)
+
+    __truediv__ = __floordiv__
+
+    def __mod__(self, other: U512) -> U512:
+        if other.int == 0:
+            return U512(self.int)
+        return U512(self.int % other.int)
+
+    def __lshift__(self, other: U512) -> U512:
+        if other.int >= 512:
+            return U512(0)
+        return U512((self.int << other.int) & U512.mask)
+
+    def __rshift__(self, other: U512) -> U512:
+        if other.int >= 512:
+            return U512(0)
+        return U512(self.int >> other.int)
+
+    def __ashift__(self, other: U512) -> U512:
+        is_positive = self.int < (1 << 511)
+
+        if other.int >= 512:
+            if is_positive:
+                return U512(0)
+            else:
+                return U512(U512.mask)
+        else:
+            if is_positive:
+                return U512(self.int >> other.int)
+            else:
+                a = self.int >> other.int
+                b = ((1 << other.int) - 1) << (512 - other.int)
+                return U512(a | b)
+
+    def __lt__(self, other: U512) -> bool:
+        return self.int < other.int
+
+    def __gt__(self, other: U512) -> bool:
+        return self.int > other.int
+
+    def __le__(self, other: U512) -> bool:
+        return self.int <= other.int
+
+    def __ge__(self, other: U512) -> bool:
+        return self.int >= other.int
+
+    def __eq__(self, other: U512) -> bool:
+        return self.int == other.int
+
+    def __ne__(self, other: U512) -> bool:
+        return self.int != other.int
+
+
 def print_u256_array(u: typing.List[U256]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
 
 
-lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U256.from_rand() for _ in range(100)]
-for i in range(100):
-    if i % 3 == 0:
-        lhs[i] = U256(lhs[i].int & 0xffffffffffffffff)
-r = [U256(1) if lhs[i] > U256(0x7fffffffffffffff) else U256(0) for i in range(100)]
+def print_u512_array(u: typing.List[U512]):
+    print('{' + ','.join([repr(e) for e in u]) + '}')
 
-print_u256_array(lhs)
-print_u256_array(rhs)
-print_u256_array(r)
+
+lhs = [U512(U256.from_rand().int) for _ in range(100)]
+rhs = [U512(U256.from_rand().int) for _ in range(100)]
+r = [lhs[i] * rhs[i] for i in range(100)]
+
+print_u512_array(lhs)
+print_u512_array(rhs)
+print_u512_array(r)
