@@ -3,8 +3,8 @@ import sys
 import subprocess
 
 
-c_riscv='/home/ubuntu/app/riscv_rvv'
-c_riscv_runner='/home/ubuntu/src/ckb-vm/target/debug/examples/int64'
+c_riscv = '/home/ubuntu/app/riscv_rvv'
+c_riscv_runner = '/home/ubuntu/src/ckb-vm/target/debug/examples/int64'
 c_entry = [
     'vadd_vi',
     'vadd_vv_32',
@@ -15,7 +15,7 @@ c_entry = [
     'vmseq_vi',
     'vmseq_vv',
     'vmseq_vx',
-    'vmsgtu_vv',
+    'vmsgtu_vi',
     'vmsgtu_vx',
     'vmsltu_vv',
     'vmsltu_vx',
