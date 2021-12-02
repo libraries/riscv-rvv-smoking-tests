@@ -364,11 +364,16 @@ def print_u512_array(u: typing.List[U512]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
+r = [U256(0) for _ in range(100)]
 for i in range(100):
-    if i % 3 == 0:
-        lhs[i] = U256(0)
+    a = lhs[i].int
+    if a > U256.mask / 2:
+        a = a - U256.mask - 1
+    # b = lhs[i].int
+    # if b > U256.mask / 2:
+    #     b = b - U256.mask - 1
 
-r = [U256(1) if lhs[i].int > 1 else U256(0) for i in range(100)]
+    r[i] = U256(1) if a > 1 else U256(0)
 
 print_u512_array(lhs)
 print_u512_array(rhs)
