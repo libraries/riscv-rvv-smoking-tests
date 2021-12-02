@@ -369,11 +369,10 @@ for i in range(100):
     a = lhs[i].int
     if a > U256.mask / 2:
         a = a - U256.mask - 1
-    # b = lhs[i].int
-    # if b > U256.mask / 2:
-    #     b = b - U256.mask - 1
-
-    r[i] = U256(1) if a > 1 else U256(0)
+    b = rhs[i].int
+    if b > U256.mask / 2:
+        b = b - U256.mask - 1
+    r[i] = U256(1) if a < b else U256(0)
 
 print_u512_array(lhs)
 print_u512_array(rhs)
