@@ -19,6 +19,7 @@ c_entry = [
     'vmsgt_vx',
     'vmsgtu_vi',
     'vmsgtu_vx',
+    'vmsle_vi',
     'vmsle_vv',
     'vmsle_vx',
     'vmslt_vv',
