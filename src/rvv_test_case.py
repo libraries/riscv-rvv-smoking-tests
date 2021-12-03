@@ -260,9 +260,10 @@ lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
 r = [U256(0) for _ in range(100)]
 for i in range(100):
-    if i == 0:
-        lhs[i] = U256(U256.mask() - 1)
-    r[i] = U256(1) if lhs[i].sint <= -2 else U256(0)
+    s = lhs[i].sint // rhs[i].sint
+    if s < 0:
+        s = (1 << 256) + s
+    r[i] = U256(s)
 
 print_u512_array(lhs)
 print_u512_array(rhs)
