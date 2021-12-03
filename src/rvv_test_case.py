@@ -147,13 +147,22 @@ class Uint:
             self.sint = x - self.mask() - 1
         else:
             self.sint = x
-
         self.u64s = []
         for i in range(0, self.bits, 64):
             self.u64s.append((x >> i) & 0xffffffffffffffff)
 
     def __repr__(self):
         return '{' + ','.join([f'0x{i:016x}' for i in self.u64s]) + '}'
+
+    @classmethod
+    def from_u(cls, u):
+        return cls(u)
+
+    @classmethod
+    def from_i(cls, i):
+        if i < 0:
+            return cls((1 << cls.bits) + i)
+        return cls(i)
 
     @classmethod
     def from_u64s(cls, l: typing.List[int]):
@@ -170,6 +179,21 @@ class Uint:
     def mask(cls):
         return (1 << cls.bits) - 1
 
+    def div(self, other: Uint) -> Uint:
+        if other.uint == 0:
+            return Uint(self.mask())
+        if self.uint == 1 << (self.bits - 1) and other.uint == self.mask():
+            return self
+        r = self.sint // other.sint
+        if r < 0 and self.sint % other.sint != 0:
+            r += 1
+        return self.__class__.from_i(r)
+
+    def divu(self, other: Uint) -> Uint:
+        if other.uint == 0:
+            return Uint(self.mask())
+        return self.__class__.from_u(self.uint // other.uint)
+
     def __add__(self, other: Uint) -> Uint:
         return self.__class__((self.uint + other.uint) & self.mask())
 
@@ -184,9 +208,7 @@ class Uint:
         return self.__class__((self.uint * other.uint) & self.mask())
 
     def __floordiv__(self, other: Uint) -> Uint:
-        if other.uint == 0:
-            return self.__class__(self.mask())
-        return self.__class__(self.uint // other.uint)
+        return self.divu(other)
 
     __truediv__ = __floordiv__
 
@@ -260,10 +282,7 @@ lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
 r = [U256(0) for _ in range(100)]
 for i in range(100):
-    s = lhs[i].sint // rhs[i].sint
-    if s < 0:
-        s = (1 << 256) + s
-    r[i] = U256(s)
+    r[i] = lhs[i].div(rhs[i])
 
 print_u512_array(lhs)
 print_u512_array(rhs)
