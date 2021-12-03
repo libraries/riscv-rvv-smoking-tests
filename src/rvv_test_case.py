@@ -179,6 +179,19 @@ class Uint:
     def mask(cls):
         return (1 << cls.bits) - 1
 
+    def add(self, other: Uint) -> Uint:
+        return self.__class__.from_u((self.uint + other.uint) & self.mask())
+
+    def sub(self, other: Uint) -> Uint:
+        x = self.uint - other.uint
+        if x < 0:
+            return self.__class__.from_i(x)
+        else:
+            return self.__class__.from_u(x)
+
+    def mul(self, other: Uint) -> Uint:
+        return self.__class__.from_u((self.uint * other.uint) & self.mask())
+
     def div(self, other: Uint) -> Uint:
         if other.uint == 0:
             return Uint(self.mask())
@@ -194,72 +207,79 @@ class Uint:
             return Uint(self.mask())
         return self.__class__.from_u(self.uint // other.uint)
 
-    def __add__(self, other: Uint) -> Uint:
-        return self.__class__((self.uint + other.uint) & self.mask())
-
-    def __sub__(self, other: Uint) -> Uint:
-        x = self.uint - other.uint
-        if x < 0:
-            x += 1
-            x += self.mask()
-        return self.__class__(x)
-
-    def __mul__(self, other: Uint) -> Uint:
-        return self.__class__((self.uint * other.uint) & self.mask())
-
-    def __floordiv__(self, other: Uint) -> Uint:
-        return self.divu(other)
-
-    __truediv__ = __floordiv__
-
-    def __mod__(self, other: Uint) -> Uint:
+    def rem(self, other: Uint) -> Uint:
         if other.uint == 0:
-            return self.__class__(self.uint)
-        return self.__class__(self.uint % other.uint)
+            return self.__class__.from_u(self.uint)
+        if self.uint == 1 << (self.bits - 1) and other.uint == self.mask():
+            return self.__class__.from_u(0)
+        return self.__class__.from_i(self.sint - self.div(other).sint * other.sint)
 
-    def __lshift__(self, other: Uint) -> Uint:
-        if other.uint >= self.bits:
-            return self.__class__(0)
-        return self.__class__((self.uint << other.uint) & self.mask())
+    def remu(self, other: Uint) -> Uint:
+        if other.uint == 0:
+            return self.__class__.from_u(self.uint)
+        return self.__class__.from_u(self.uint % other.uint)
 
-    def __rshift__(self, other: Uint) -> Uint:
-        if other.uint >= self.bits:
-            return self.__class__(0)
-        return self.__class__(self.uint >> other.uint)
+    def sll(self, other: Uint) -> Uint:
+        shamt = other.uint % self.bits
+        return self.__class__.from_u((self.uint << shamt) & self.mask())
 
-    def __ashift__(self, other: Uint) -> Uint:
-        is_positive = self.uint < (1 << (self.bits - 1))
+    def srl(self, other: Uint) -> Uint:
+        shamt = other.uint % self.bits
+        return self.__class__from_u(self.uint >> shamt)
 
-        if other.uint >= self.bits:
-            if is_positive:
-                return self.__class__(0)
-            else:
-                return self.__class__(self.mask())
+    def sra(self, other: Uint) -> Uint:
+        shamt = other.uint % self.bits
+        if self.uint < (1 << (self.bits - 1)):
+            return self.__class__.from_u(self.uint >> shamt)
         else:
-            if is_positive:
-                return self.__class__(self.uint >> other.uint)
-            else:
-                a = self.uint >> other.uint
-                b = ((1 << other.uint) - 1) << (self.bits - other.uint)
-                return self.__class__(a | b)
+            a = self.uint >> shamt
+            b = ((1 << shamt) - 1) << (self.bits - shamt)
+            return self.__class__.from_u(a | b)
 
-    def __lt__(self, other: Uint) -> bool:
-        return self.uint < other.uint
-
-    def __gt__(self, other: Uint) -> bool:
-        return self.uint > other.uint
-
-    def __le__(self, other: Uint) -> bool:
-        return self.uint <= other.uint
-
-    def __ge__(self, other: Uint) -> bool:
-        return self.uint >= other.uint
-
-    def __eq__(self, other: Uint) -> bool:
+    def seq(self, other: Uint) -> bool:
         return self.uint == other.uint
 
-    def __ne__(self, other: Uint) -> bool:
+    def sne(self, other: Uint) -> bool:
         return self.uint != other.uint
+
+    def slt(self, other: Uint) -> bool:
+        return self.sint < other.sint
+
+    def sgt(self, other: Uint) -> bool:
+        return self.sint > other.sint
+
+    def sltu(self, other: Uint) -> bool:
+        return self.uint < other.uint
+
+    def sgtu(self, other: Uint) -> bool:
+        return self.uint > other.uint
+
+    def sle(self, other: Uint) -> bool:
+        return self.sint <= other.sint
+
+    def sge(self, other: Uint) -> bool:
+        return self.sint >= other.sint
+
+    def sleu(self, other: Uint) -> bool:
+        return self.uint <= other.uint
+
+    def sgeu(self, other: Uint) -> bool:
+        return self.uint >= other.uint
+
+    __add__ = add
+    __sub__ = sub
+    __mul__ = mul
+    __floordiv__ = divu
+    __truediv__ = divu
+    __mod__ = remu
+    __lt__ = sltu
+    __gt__ = sgtu
+    __le__ = sleu
+    __ge__ = sgeu
+    __eq__ = seq
+    __ne__ = sne
+    __lshift__ = sll
+    __rshift__ = srl
 
 
 class U256(Uint):
