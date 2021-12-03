@@ -33,6 +33,8 @@ c_entry = [
     'vmsne_vx',
     'vmul_vv',
     'vmul_vx',
+    'vrem_vv',
+    'vrem_vx',
     'vremu_vv',
     'vremu_vv_512',
     'vremu_vx',
@@ -74,3 +76,19 @@ for sub in sys.argv[1:]:
             print(f'fmt res/{i}.c')
             s = subprocess.call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/{i}.c', shell=True)
             assert s == 0
+
+    if sub in c_entry:
+        i = sub
+        print(f'build bin/{i}')
+        s = subprocess.call(f'target/debug/rvv-as res/{i}.s > bin/{i}_emit.s', shell=True)
+        assert s == 0
+        s = subprocess.call(f'{c_riscv}/bin/riscv64-unknown-elf-gcc -c bin/{i}_emit.s -o bin/{i}.o', shell=True)
+        assert s == 0
+        s = subprocess.call(f'{c_riscv}/bin/riscv64-unknown-elf-gcc res/{i}.c -o bin/{i} bin/{i}.o', shell=True)
+        assert s == 0
+        print(f'run bin/{i}')
+        s = subprocess.call(f'{c_riscv_runner} bin/{i}', shell=True)
+        assert s == 0
+        print(f'fmt res/{i}.c')
+        s = subprocess.call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/{i}.c', shell=True)
+        assert s == 0
