@@ -302,10 +302,11 @@ lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
 r = [U256(0) for _ in range(100)]
 for i in range(100):
-    r[i] = lhs[i].rem(U256.from_i(-100))
+    if lhs[i].slt(U256.from_i(-1)):
+        r[i] = lhs[i]
+    else:
+        r[i] = U256.from_i(-1)
 
 print_u512_array(lhs)
 print_u512_array(rhs)
 print_u512_array(r)
-
-print(U256.from_i(-100))
