@@ -68,6 +68,10 @@ c_entry = [
     'vxor_vi',
     'vxor_vx',
     'vxor_vv',
+    'vmv1r_v',
+    'vmv2r_v',
+    'vmv4r_v',
+    'vmv8r_v',
 ]
 
 assert len(glob.glob('res/*.c')) == len(c_entry)
