@@ -266,6 +266,8 @@ class Uint:
     def sgeu(self, other: Uint) -> bool:
         return self.uint >= other.uint
 
+        
+
     __add__ = add
     __sub__ = sub
     __mul__ = mul
@@ -282,12 +284,22 @@ class Uint:
     __rshift__ = srl
 
 
-class U256(Uint):
-    bits = 256
-
-
 class U512(Uint):
     bits = 512
+
+class U256(Uint):
+    bits = 256
+    def widening_s(self) -> U512:
+        assert self.bits == 256
+        x = self.uint
+        mask = self.mask()
+        if x > mask // 2:
+            mask2 = (1 << (self.bits*2)) - 1
+            # sign extend
+            return U512(self.uint + (mask2 - mask))
+        else:
+            # zero extend
+            return U512(self.uint)
 
 
 def print_u256_array(u: typing.List[U256]):
@@ -300,17 +312,22 @@ def print_u512_array(u: typing.List[U512]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
-r = [U256(0) for _ in range(100)]
-for i in range(100):
-    # if i % 3 == 0:
-    #     lhs[i] = U256.from_u(U256.mask()) - U256.from_u(random.randint(0, 15))
-    a = lhs[i].sint - 0x7fffffffffffffff
-    if a > (1 << 255) - 1:
-        a = (1 << 255) - 1
-    if a < -(1 << 255):
-        a = -(1 << 255)
-    r[i] = U256.from_i(a)
+r = [U512(0) for _ in range(100)]
 
-print_u512_array(lhs)
-print_u512_array(rhs)
+lhs_s = [x.widening_s() for x in lhs]
+rhs_s = [x.widening_s() for x in rhs]
+
+for i in range(100):
+    r[i] = lhs_s[i] - rhs_s[i]
+
+print("uint64_t x[100][4] = ")
+print_u256_array(lhs)
+print(";")
+
+print("uint64_t y[100][4] = ")
+print_u256_array(rhs)
+print(";")
+
+print("uint64_t e[100][8] = ")
 print_u512_array(r)
+print(";")
