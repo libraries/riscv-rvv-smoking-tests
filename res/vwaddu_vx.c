@@ -309,8 +309,7 @@ int main() {
   uint64_t z[100][8] = {0};
   vwaddu_vx(100, x, y, z);
 
-  // can only test one V register due to bug
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 100; i++) {
     for (int j = 0; j < 8; j++) {
       if (z[i][j] != e[i][j]) {
         return 1 + i;
