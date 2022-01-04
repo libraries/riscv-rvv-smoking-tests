@@ -300,7 +300,8 @@ class U256(Uint):
         else:
             # zero extend
             return U512(self.uint)
-
+    def widening_u(self) -> U512:
+        return U512(self.uint)
 
 def print_u256_array(u: typing.List[U256]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
