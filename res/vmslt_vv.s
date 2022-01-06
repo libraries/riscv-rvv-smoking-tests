@@ -10,7 +10,8 @@ vmslt_vv:
     vle256.v v1, (a2)
       add a2, a2, t0
     vmslt.vv v2, v0, v1
-    vse256.v v2, (a3)
+    vsetivli t0, 1, e8, m1, ta, ma
+    vse8.v v2, (a3)
       add a3, a3, t0
       bnez a0, vmslt_vv
       ret

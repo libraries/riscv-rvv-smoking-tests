@@ -8,7 +8,8 @@ vmseq_vi:
       slli t0, t0, 5
       add a1, a1, t0
     vmseq.vi v1, v0, 1
+    vsetivli t0, 1, e8, m1, ta, ma
     vse256.v v1, (a2)
-      add a2, a2, t0
+      addi a2, a2, 1
       bnez a0, vmseq_vi
       ret

@@ -8,7 +8,8 @@ vmsgtu_vx:
       slli t0, t0, 5
       add a1, a1, t0
     vmsgtu.vx v1, v0, a2
-    vse256.v v1, (a3)
+    vsetivli t0, 1, e8, m1, ta, ma
+    vse8.v v1, (a3)
       add a3, a3, t0
       bnez a0, vmsgtu_vx
       ret
