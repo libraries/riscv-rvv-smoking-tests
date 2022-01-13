@@ -104,6 +104,7 @@ c_entry = [
     'vwsubu_wx',
     'vwadd_wx',
     'vwsub_wx',
+    'vwmulu_vv',
 ]
 
 assert len(glob.glob('res/*.c')) == len(c_entry)
