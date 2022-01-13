@@ -316,7 +316,7 @@ rhs = [U256.from_rand() for _ in range(100)]
 r = [U512(0) for _ in range(100)]
 
 for i in range(100):
-    r[i] = U512(lhs[i].uint) * U512(0xffffffffffffffff)
+    r[i] = U512.from_i(lhs[i].sint * -78)
 
 print_u256_array(lhs)
 print_u256_array(rhs)
