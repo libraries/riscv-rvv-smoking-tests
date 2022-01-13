@@ -313,10 +313,10 @@ def print_u512_array(u: typing.List[U512]):
 
 lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
-r = [U512(0) for _ in range(100)]
+r = [U256(0) for _ in range(100)]
 
 for i in range(100):
-    r[i] = U512.from_i(lhs[i].sint * 0xfffffffffffffffc)
+    r[i] = U256.from_u(U512.from_i(lhs[i].sint * 2022).uint >> 256)
 
 print_u256_array(lhs)
 print_u256_array(rhs)
