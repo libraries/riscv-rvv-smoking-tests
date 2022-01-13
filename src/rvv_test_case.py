@@ -266,7 +266,7 @@ class Uint:
     def sgeu(self, other: Uint) -> bool:
         return self.uint >= other.uint
 
-        
+
 
     __add__ = add
     __sub__ = sub
@@ -315,20 +315,9 @@ lhs = [U256.from_rand() for _ in range(100)]
 rhs = [U256.from_rand() for _ in range(100)]
 r = [U512(0) for _ in range(100)]
 
-lhs_s = [x.widening_s() for x in lhs]
-rhs_s = [x.widening_s() for x in rhs]
-
 for i in range(100):
-    r[i] = lhs_s[i] - rhs_s[i]
+    r[i] = U512.from_i(lhs[i].sint * 0xfffffffffffffffc)
 
-print("uint64_t x[100][4] = ")
 print_u256_array(lhs)
-print(";")
-
-print("uint64_t y[100][4] = ")
 print_u256_array(rhs)
-print(";")
-
-print("uint64_t e[100][8] = ")
 print_u512_array(r)
-print(";")
