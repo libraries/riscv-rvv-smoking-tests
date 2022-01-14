@@ -225,7 +225,7 @@ class Uint:
 
     def srl(self, other: Uint) -> Uint:
         shamt = other.uint % self.bits
-        return self.__class__from_u(self.uint >> shamt)
+        return self.__class__.from_u(self.uint >> shamt)
 
     def sra(self, other: Uint) -> Uint:
         shamt = other.uint % self.bits
@@ -284,6 +284,9 @@ class Uint:
     __rshift__ = srl
 
 
+class U128(Uint):
+    bits = 128
+
 class U512(Uint):
     bits = 512
 
@@ -303,21 +306,20 @@ class U256(Uint):
     def widening_u(self) -> U512:
         return U512(self.uint)
 
-def print_u256_array(u: typing.List[U256]):
-    print('{' + ','.join([repr(e) for e in u]) + '}')
-
-
-def print_u512_array(u: typing.List[U512]):
+def print_array(u: typing.List[Uint]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
 
 
 lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U256.from_rand() for _ in range(100)]
-r = [U256(0) for _ in range(100)]
+rhs = [U128.from_rand() for _ in range(100)]
+r = [U128(0) for _ in range(100)]
 
 for i in range(100):
-    r[i] = U256.from_u(U512.from_i(lhs[i].sint * 2022).uint >> 256)
+    rhs[i] = U128.from_u(0x17)
+    # r[i] = U128.from_u(lhs[i].sra(rhs[i]).uint % (1 << 128))
 
-print_u256_array(lhs)
-print_u256_array(rhs)
-print_u512_array(r)
+    r[i] = U128.from_u(lhs[i].sra(rhs[i]).uint % (1 << 128))
+
+print_array(lhs)
+print_array(rhs)
+print_array(r)
