@@ -266,8 +266,6 @@ class Uint:
     def sgeu(self, other: Uint) -> bool:
         return self.uint >= other.uint
 
-
-
     __add__ = add
     __sub__ = sub
     __mul__ = mul
@@ -287,39 +285,30 @@ class Uint:
 class U128(Uint):
     bits = 128
 
-class U512(Uint):
-    bits = 512
-
 class U256(Uint):
     bits = 256
-    def widening_s(self) -> U512:
-        assert self.bits == 256
-        x = self.uint
-        mask = self.mask()
-        if x > mask // 2:
-            mask2 = (1 << (self.bits*2)) - 1
-            # sign extend
-            return U512(self.uint + (mask2 - mask))
-        else:
-            # zero extend
-            return U512(self.uint)
-    def widening_u(self) -> U512:
-        return U512(self.uint)
+
+class U512(Uint):
+    bits = 512
 
 def print_array(u: typing.List[Uint]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
 
+def print_masks(u: typing.List[int]):
+    print('{' + ','.join([f'0x{e:02x}' for e in u]) + '}')
 
-lhs = [U256.from_rand() for _ in range(100)]
-rhs = [U128.from_rand() for _ in range(100)]
-r = [U128(0) for _ in range(100)]
+lhs = [U256.from_rand() for _ in range(96)]
+rhs = [U256.from_rand() for _ in range(96)]
+r = [U256(0) for _ in range(96)]
 
-for i in range(100):
-    rhs[i] = U128.from_u(0x17)
-    # r[i] = U128.from_u(lhs[i].sra(rhs[i]).uint % (1 << 128))
-
-    r[i] = U128.from_u(lhs[i].sra(rhs[i]).uint % (1 << 128))
+r = [0 for _ in range(12)]
+for i in range(96):
+    if random.random() > 0.7:
+        lhs[i] = U256.from_u(U256.mask() - random.randint(0, 15))
+    rhs[i] = U256.from_u(0x15)
+    if (lhs[i] + rhs[i]) < lhs[i]:
+        r[i // 8] |= 1 << (i % 8)
 
 print_array(lhs)
 print_array(rhs)
-print_array(r)
+print_masks(r)

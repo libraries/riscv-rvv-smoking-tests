@@ -122,6 +122,9 @@ c_entry = [
     'vnsra_wv',
     'vnsra_wx',
     'vnsra_wi',
+    'vmadc_vv',
+    'vmadc_vx',
+    'vmadc_vi',
 ]
 
 assert len(glob.glob('res/*.c')) == len(c_entry)
