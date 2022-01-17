@@ -14,11 +14,10 @@ $ make newlib
 $ make build-qemu
 ```
 
-### Install `ckb-debugger-rvv`
+### Install `ckb-vm/examples/int64`
 ```sh
-$ git clone -b rvv https://github.com/mohanson/ckb-standalone-debugger
-$ cd ckb-standalone-debugger/bins
-$ cargo install --path . -f --locked
+$ git clone -b rvv https://github.com/nervosnetwork/ckb-vm.git
+cargo install --example int64 --path .
 ```
 
 ### Install `rvv-as`

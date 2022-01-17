@@ -110,7 +110,7 @@ assert len(glob.glob('res/*.c')) == len(c_entry)
 
 def run(entry):
     print(f'run bin/{entry}')
-    s = subprocess.call(f"ckb-debugger-rvv --bin bin/{entry} | fgrep 'Run result: 0'", shell=True)
+    s = subprocess.call(f"int64 bin/{entry}", shell=True)
     assert s == 0
 
 def build(entry):
