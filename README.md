@@ -2,6 +2,7 @@
 
 ## Installation
 
+### Install gnu toolchain
 ```sh
 $ git clone --branch rvv-intrinsic https://github.com/riscv-collab/riscv-gnu-toolchain
 $ cd riscv-gnu-toolchain
@@ -13,8 +14,21 @@ $ make newlib
 $ make build-qemu
 ```
 
+### Install `ckb-debugger-rvv`
 ```sh
-$ git clone https://github.com/TheWaWaR/riscv-v-spec
-$ cd riscv-v-spec/example
-$ make
+$ git clone -b rvv https://github.com/mohanson/ckb-standalone-debugger
+$ cd ckb-standalone-debugger/bins
+$ cargo install --path . -f --locked
+```
+
+### Install `rvv-as`
+```sh
+$ cargo install rvv-as
+```
+
+### Build and Run the tests
+```sh
+$ mkdir bin
+$ python make.py build
+$ python make.py run
 ```
