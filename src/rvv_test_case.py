@@ -302,7 +302,7 @@ def gen_vvv():
     rhs = [U256.from_rand() for _ in range(100)]
     r = [U256.from_u(0) for _ in range(100)]
     def f(x, y):
-        return x + U256.from_u(16)
+        return x - U256.from_u(16)
     for i in range(100):
         r[i] = f(lhs[i], rhs[i])
     print_array(lhs)
