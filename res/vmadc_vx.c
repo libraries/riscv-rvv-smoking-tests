@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmadc_vx(size_t n, const uint64_t x[][4], const uint64_t y, uint8_t z[13]);
+void vmadc_vx(size_t n, const uint64_t x[][4], const uint64_t y, uint8_t z[12]);
 
 int main() {
   uint64_t x[96][4] = {{0xd251a40a022b9000, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff},

@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmsbc_vv(size_t n, const uint64_t x[][4], const uint64_t y[][4], uint8_t z[13]);
+void vmsbc_vv(size_t n, const uint64_t x[][4], const uint64_t y[][4], uint8_t z[12]);
 
 int main() {
   uint64_t x[96][4] = {{0x00004a9e26b7f794, 0xbad28e0ca5854070, 0x3d0e482377794618, 0x00000bea6a6af755},

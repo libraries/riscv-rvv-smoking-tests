@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmsbc_vx(size_t n, const uint64_t x[][4], const uint64_t y, uint8_t z[13]);
+void vmsbc_vx(size_t n, const uint64_t x[][4], const uint64_t y, uint8_t z[12]);
 
 int main() {
   uint64_t x[96][4] = {{0x709c5aefc79829ae, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000},
