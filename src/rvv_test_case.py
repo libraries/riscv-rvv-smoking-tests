@@ -297,6 +297,18 @@ def print_array(u: typing.List[Uint]):
 def print_masks(u: typing.List[int]):
     print('{' + ','.join([f'0x{e:02x}' for e in u]) + '}')
 
+def gen_vvv():
+    lhs = [U256.from_rand() for _ in range(100)]
+    rhs = [U256.from_rand() for _ in range(100)]
+    r = [U256.from_u(0) for _ in range(100)]
+    def f(x, y):
+        return x + U256.from_u(16)
+    for i in range(100):
+        r[i] = f(lhs[i], rhs[i])
+    print_array(lhs)
+    print_array(rhs)
+    print_array(r)
+
 def gen_mvv():
     lhs = [U256.from_rand() for _ in range(96)]
     rhs = [U256.from_rand() for _ in range(96)]
@@ -313,4 +325,4 @@ def gen_mvv():
     print_array(rhs)
     print_masks(r)
 
-gen_mvv()
+gen_vvv()
