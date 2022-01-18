@@ -297,18 +297,20 @@ def print_array(u: typing.List[Uint]):
 def print_masks(u: typing.List[int]):
     print('{' + ','.join([f'0x{e:02x}' for e in u]) + '}')
 
-lhs = [U256.from_rand() for _ in range(96)]
-rhs = [U256.from_rand() for _ in range(96)]
-r = [U256(0) for _ in range(96)]
+def gen_mvv():
+    lhs = [U256.from_rand() for _ in range(96)]
+    rhs = [U256.from_rand() for _ in range(96)]
+    r = [0 for _ in range(12)]
+    for i in range(96):
+        if i % 3 == 0:
+            lhs[i] = U256.from_u(random.randint(0, 0x7fffffffffffffff))
+        rhs[i] = U256.from_u(0x7fffffffffffffff)
+    f = lambda x, y: x - y > x
+    for i in range(96):
+        if f(lhs[i], rhs[i]):
+            r[i // 8] |= 1 << (i % 8)
+    print_array(lhs)
+    print_array(rhs)
+    print_masks(r)
 
-r = [0 for _ in range(12)]
-for i in range(96):
-    if random.random() > 0.7:
-        lhs[i] = U256.from_u(U256.mask() - random.randint(0, 15))
-    rhs[i] = U256.from_u(0x15)
-    if (lhs[i] + rhs[i]) < lhs[i]:
-        r[i // 8] |= 1 << (i % 8)
-
-print_array(lhs)
-print_array(rhs)
-print_masks(r)
+gen_mvv()
