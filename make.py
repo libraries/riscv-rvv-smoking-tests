@@ -1,10 +1,10 @@
+#!/usr/bin/env python
+
+import os
 import glob
 import sys
 import subprocess
 
-
-c_riscv = '/home/ubuntu/app/riscv_rvv'
-c_riscv_runner = '/home/ubuntu/src/ckb-vm/target/debug/examples/int64'
 c_entry = [
     'vadd_vi',
     'vadd_vv_32',
@@ -131,40 +131,40 @@ c_entry = [
 
 assert len(glob.glob('res/*.c')) == len(c_entry)
 
+def run(entry):
+    print(f'run bin/{entry}')
+    s = subprocess.call(f"int64 bin/{entry}", shell=True)
+    assert s == 0
+
+def build(entry):
+    print(f'build bin/{entry}')
+    s = subprocess.call(f'rvv-as res/{entry}.s > bin/{entry}_emit.s', shell=True)
+    assert s == 0
+    s = subprocess.call(f'riscv64-unknown-elf-gcc -c bin/{entry}_emit.s -o bin/{entry}.o', shell=True)
+    assert s == 0
+    s = subprocess.call(f'riscv64-unknown-elf-gcc res/{entry}.c -o bin/{entry} bin/{entry}.o', shell=True)
+    assert s == 0
+
+def fmt(entry):
+    print(f'fmt res/{entry}.c')
+    s = subprocess.call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/{entry}.c', shell=True)
+    assert s == 0
 
 for sub in sys.argv[1:]:
+    if not os.path.exists('bin'):
+        print('mkdir bin/')
+        os.mkdir('bin')
     if sub == 'build':
         for i in c_entry:
-            print(f'build bin/{i}')
-            s = subprocess.call(f'target/debug/rvv-as res/{i}.s > bin/{i}_emit.s', shell=True)
-            assert s == 0
-            s = subprocess.call(f'{c_riscv}/bin/riscv64-unknown-elf-gcc -c bin/{i}_emit.s -o bin/{i}.o', shell=True)
-            assert s == 0
-            s = subprocess.call(f'{c_riscv}/bin/riscv64-unknown-elf-gcc res/{i}.c -o bin/{i} bin/{i}.o', shell=True)
-            assert s == 0
+            build(i)
     if sub == 'run':
         for i in c_entry:
-            print(f'run bin/{i}')
-            s = subprocess.call(f'{c_riscv_runner} bin/{i}', shell=True)
-            assert s == 0
+            run(i)
     if sub == 'fmt':
         for i in c_entry:
-            print(f'fmt res/{i}.c')
-            s = subprocess.call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/{i}.c', shell=True)
-            assert s == 0
+            fmt(i)
 
     if sub in c_entry:
-        i = sub
-        print(f'build bin/{i}')
-        s = subprocess.call(f'target/debug/rvv-as res/{i}.s > bin/{i}_emit.s', shell=True)
-        assert s == 0
-        s = subprocess.call(f'{c_riscv}/bin/riscv64-unknown-elf-gcc -c bin/{i}_emit.s -o bin/{i}.o', shell=True)
-        assert s == 0
-        s = subprocess.call(f'{c_riscv}/bin/riscv64-unknown-elf-gcc res/{i}.c -o bin/{i} bin/{i}.o', shell=True)
-        assert s == 0
-        print(f'run bin/{i}')
-        s = subprocess.call(f'{c_riscv_runner} bin/{i}', shell=True)
-        assert s == 0
-        print(f'fmt res/{i}.c')
-        s = subprocess.call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/{i}.c', shell=True)
-        assert s == 0
+        build(sub)
+        run(sub)
+        fmt(sub)
