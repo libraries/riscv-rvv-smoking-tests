@@ -313,11 +313,11 @@ def gen_mvv():
     lhs = [U256.from_rand() for _ in range(96)]
     rhs = [U256.from_rand() for _ in range(96)]
     r = [0 for _ in range(12)]
-    for i in range(96):
-        if i % 3 == 0:
-            lhs[i] = U256.from_u(random.randint(0, 0x7fffffffffffffff))
-        rhs[i] = U256.from_u(0x7fffffffffffffff)
-    f = lambda x, y: x - y > x
+    # for i in range(96):
+    #     if i % 3 == 0:
+    #         lhs[i] = U256.from_u(random.randint(0, 0x7fffffffffffffff))
+    #     rhs[i] = U256.from_u(0x7fffffffffffffff)
+    f = lambda x, y: x.uint < 15
     for i in range(96):
         if f(lhs[i], rhs[i]):
             r[i // 8] |= 1 << (i % 8)
@@ -325,4 +325,4 @@ def gen_mvv():
     print_array(rhs)
     print_masks(r)
 
-gen_vvv()
+gen_mvv()

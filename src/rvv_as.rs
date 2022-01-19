@@ -84,6 +84,10 @@ fn emit(code: u32) -> String {
     format!(".byte {:#04x}, {:#04x}, {:#04x}, {:#04x}", a, b, c, d)
 }
 
+fn immi(s: &str) -> i8 {
+    s.parse::<i8>().unwrap()
+}
+
 fn conv(line: &str) {
     let text = line.trim();
     let seps: Vec<&str> = text.splitn(2, " ").collect();
@@ -228,6 +232,46 @@ fn conv(line: &str) {
             let mut code = 0b000_000_1_01011_00000_000_00000_0100111;
             code |= (vegn(args[0]) as u32) << 7;
             code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vmadc.vvm" => {
+            let mut code = 0b010001_0_00000_00000_000_00000_1010111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (vegn(args[1]) as u32) << 20;
+            code |= (vegn(args[2]) as u32) << 15;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vmadc.vxm" => {
+            let mut code = 0b010001_0_00000_00000_100_00000_1010111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (vegn(args[1]) as u32) << 20;
+            code |= (regn(args[2]) as u32) << 15;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vmadc.vim" => {
+            let mut code = 0b010001_0_00000_00000_011_00000_1010111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (vegn(args[1]) as u32) << 20;
+            code |= (((immi(args[2]) as u8) << 3 >> 3) as u32) << 15;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vmsbc.vvm" => {
+            let mut code = 0b010010_0_00000_00000_000_00000_1010111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (vegn(args[1]) as u32) << 20;
+            code |= (vegn(args[2]) as u32) << 15;
+            println!("{}# {}", indent, text);
+            println!("{}{}", indent, emit(code));
+        }
+        "vmsbc.vxm" => {
+            let mut code = 0b010010_0_00000_00000_100_00000_1010111;
+            code |= (vegn(args[0]) as u32) << 7;
+            code |= (vegn(args[1]) as u32) << 20;
+            code |= (regn(args[2]) as u32) << 15;
             println!("{}# {}", indent, text);
             println!("{}{}", indent, emit(code));
         }
