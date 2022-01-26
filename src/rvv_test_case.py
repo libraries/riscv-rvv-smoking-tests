@@ -328,4 +328,14 @@ def gen_mvv():
     print_array(rhs)
     print_masks(r)
 
-gen_mvv()
+def gen_mmm():
+    lhs = [random.randint(0, 0xff) for _ in range(12)]
+    rhs = [random.randint(0, 0xff) for _ in range(12)]
+    r = [0 for _ in range(12)]
+    for i in range(12):
+        r[i] = 255 - (lhs[i] ^ rhs[i])
+    print_masks(lhs)
+    print_masks(rhs)
+    print_masks(r)
+
+gen_mmm()
