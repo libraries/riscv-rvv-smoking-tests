@@ -340,5 +340,13 @@ def gen_mmm():
 
 # gen_vvv()
 
-lhs = [U256.from_u(random.randint(0, (1<<64) - 1)) for _ in range(100)]
-print_array(lhs)
+# vs1 = U256.from_u(int.from_bytes([1, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 128, 4, 0, 0, 0, 0, 0, 0, 0], byteorder='little'))
+# vs2 = U256.from_u(int.from_bytes([64, 0, 0, 0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], byteorder='little'))
+# vd = U256.from_u(int.from_bytes([0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 128, 0, 0, 0], byteorder='little'))
+
+# print_array([vs1])
+# print_array([vs2])
+# print_array([vd])
+
+
+# print_array([U256.from_u(int.from_bytes([64, 0, 64, 0, 0, 0, 0, 0, 64, 0, 0, 1, 0, 0, 0, 0, 192, 31, 0, 0, 1, 0, 0, 0, 160, 225, 0, 0, 128, 0, 0, 0] , byteorder='little'))])
