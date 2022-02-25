@@ -21,23 +21,29 @@ $ make build-qemu
 $ qemu-riscv64 -cpu rv64,x-v=true USER_PROGRAM
 ```
 
+### Usage of spike
+
+```sh
+$ spike --isa=RV64GCV pk vadd_vv_32
+```
+
 ### Install `ckb-vm/examples/int64`
 
 ```sh
 $ git clone -b rvv https://github.com/nervosnetwork/ckb-vm.git
-cargo install --example int64 --path .
+$ cargo build --example int64
 ```
 
 ### Install `rvv-as`
 
 ```sh
-$ cargo install rvv-as
+$ git clone https://github.com/TheWaWaR/rvv-encoder
+$ cargo build
 ```
 
 ## Build and Run the tests
 
 ```sh
-$ mkdir bin
-$ python make.py build
-$ python make.py run
+$ python main.py build
+$ python main.py run
 ```
