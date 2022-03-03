@@ -45,6 +45,8 @@ for sub in sys.argv[1:]:
             build(i)
     if sub == 'run':
         for i in c_entry:
+            if 'bench' in i:
+                continue
             run(i)
     if sub == 'fmt':
         for i in c_entry:

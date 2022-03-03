@@ -307,7 +307,7 @@ int main() {
                         {0x6c8aa29f5dd91d60, 0x9e592ff23b1dec0e, 0xdf14671ee3f484cb, 0xef08d65e7d64e8bc}};
 
   int s = 0;
-  for (int i = 0; i < 2000; i++) {
+  for (int i = 0; i < 500000; i++) {
     vadd_vv(100, x, y, z);
     s += i;
   }
