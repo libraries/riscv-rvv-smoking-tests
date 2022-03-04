@@ -312,5 +312,13 @@ int main() {
     s += i;
   }
 
+  for (int i = 0; i < 100; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (z[i][j] != e[i][j]) {
+        return 1;
+      }
+    }
+  }
+
   return s - s;
 }
