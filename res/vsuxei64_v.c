@@ -1,0 +1,43 @@
+#include <stddef.h>
+#include <stdint.h>
+
+void vsuxei64_v(size_t n, const uint64_t x[], const uint64_t y[], uint64_t z[]);
+
+int main() {
+  uint64_t x[100] = {
+      0xcbfba0c7c7b5596d, 0xd73eb0ecfd041e6d, 0x6b621aebc7c78787, 0x10db33996f29ba72, 0x66edddcf1ecd5e67,
+      0x985f9dae572e5c85, 0xffb8fbb71bd600ba, 0xd21333654e4bb37d, 0x1c496e1e66c59da3, 0xc8c51a4242e93ffa,
+      0xe75f2d67ee995ed5, 0xd689ed849d5e4a15, 0x40f9094495205c91, 0x4078b601e3532210, 0xb6279d28383fabe2,
+      0x0073e8a4d2db5aac, 0x722362b33a7c41d8, 0x3c4fc5b1a5155756, 0xc002733b7775b64c, 0xcb4741d8285ef90f,
+      0x401b5fb6170f69b3, 0x40a2864e0798da1a, 0xbfe875c900231be7, 0x622b32eec4ef7968, 0x2e56930bd1aa7066,
+      0xa9223b4958d5bf34, 0xa7d1e7ce13791dce, 0x776e54d97fce9084, 0x946c4095d6b44456, 0x7e132bfbdb51402f,
+      0xcb0f0df78eb35356, 0x01d25889e137d567, 0x41648c5cb4f715b9, 0xc00da94c1b5208c3, 0x26f8aa10585e741a,
+      0x6476d5bf6b6ffe23, 0x32d6cd355802a8dd, 0xf3789b1f6b41ae0e, 0x0b08e6b75df4ae3b, 0x6da7e662c7e08741,
+      0x583f03a24cc0ff5a, 0x69056135f696eca9, 0xcbd0119747d89c69, 0xdafe0ea109d35c75, 0x0b9014545ddd5843,
+      0xca9940e95202db47, 0x1bca40ccb969eed3, 0x8324834eb1f88936, 0x9507c5ad26504a7d, 0x9dd230ac0bb2863e,
+      0x3ee31e4a228d5832, 0xebecc42ee93ee0b9, 0x9e0d344382a0dd1e, 0x0c9490753d959e66, 0x2682a70e1b21dc0e,
+      0xed6f359ae54f6fff, 0x39e0c034a1bea07a, 0xa9a004efc1b39ec6, 0xfbb7561fdab0a486, 0x22eac5b63630baa1,
+      0x82ac729e79dc763a, 0x0cf34315b35848e4, 0x98f7d1ded585f8c9, 0xf33cf2a3549c877a, 0x7e2fb16dcf03c385,
+      0x6c2729b40da789b6, 0x329121766c1102aa, 0x6b58d8dce1193ca0, 0xab2aafd6a64009d6, 0xb7797780c6f4f277,
+      0xd8b7ddc97edc290c, 0x8c2fd32fc2a1ff21, 0xd91d37f421b573a1, 0x2d836ee2c5d1fdd5, 0x6fcd494e4842f49e,
+      0x64f47f492871a128, 0xdbe0cd3b56b7ca3d, 0xe7cdcbeef198b8f6, 0xc5e21f50027fc22c, 0x363416ebbf82ef3c,
+      0x7b2227aff216171a, 0x4512199f66d74395, 0x33258fd199571007, 0x376ed1011ae72ceb, 0xaf2a06c1f8afa0fd,
+      0x6af74da9a251aee5, 0x79296c22c0422ade, 0x0694febf2befaffd, 0x9ba3510403790597, 0x17c375401774e051,
+      0x8b122de69f26deaf, 0x65c91df61a1b7702, 0x85e599e772498209, 0x1c0108e381a4301b, 0xb461b4e3f0275157,
+      0x178f022a48665e4f, 0x8c5ce5c30e8b8491, 0x123b2eeae3953deb, 0xa03bbe3a40b4a345, 0x9a9e55b3d86362fc};
+  uint64_t y[100] = {};
+  uint64_t z[100] = {};
+  for (int i = 0; i < 100; i++) {
+    y[i] = (99 - i) << 3;
+  }
+
+  vsuxei64_v(100, x, y, z);
+
+  for (int i = 0; i < 100; i++) {
+    if (z[i] != x[99 - i]) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
