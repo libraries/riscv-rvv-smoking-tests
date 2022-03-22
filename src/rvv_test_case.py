@@ -29,7 +29,7 @@ class Eint:
             return f'0x{self.uint:016x}'
         u64s = []
         for i in range(0, self.bits, 64):
-            u64s.append((x >> i) & 0xffffffffffffffff)
+            u64s.append((self.uint >> i) & 0xffffffffffffffff)
         return '{' + ','.join([f'0x{i:016x}' for i in u64s]) + '}'
 
     @classmethod
@@ -221,11 +221,11 @@ def gen_vvv():
 #     print_masks(rhs)
 #     print_masks(r)
 
-x = [E64.from_rand() for _ in range(32)]
-y = [E64.from_rand() for _ in range(100)]
+x = [E64.from_rand() for _ in range(100)]
+y = [E32.from_rand() for _ in range(100)]
+r = [E64.from_rand() for _ in range(100)]
 for i in range(100):
-    y[i] = E64.from_u(99 - i)
-r = x[::-1]
+    r[i] = E64.from_u(x[i].uint).wrapping_sub(E64.from_u(y[i].uint))
 
 print_array(x)
 print_array(y)
