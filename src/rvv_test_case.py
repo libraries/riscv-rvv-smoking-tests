@@ -185,14 +185,11 @@ def print_masks(u: typing.List[int]):
 def gen_vvv():
     x = [E32.from_rand() for _ in range(100)]
     y = [E32.from_rand() for _ in range(100)]
-    z = [E64.from_rand() for _ in range(100)]
     r = [E64.from_rand() for _ in range(100)]
     for i in range(100):
-        # r[i] = E64.from_u((E64.from_i(2 * y[i].sint).uint + z[i].uint) % (1 << 64))
         r[i] = E64.from_u((E64.from_i(-2 * y[i].uint).uint + z[i].uint) % (1 << 64))
     print_array(x)
     print_array(y)
-    print_array(z)
     print_array(r)
 
 # def gen_mvv():
@@ -224,4 +221,12 @@ def gen_vvv():
 #     print_masks(rhs)
 #     print_masks(r)
 
-gen_vvv()
+x = [E64.from_rand() for _ in range(100)]
+y = [E64.from_rand() for _ in range(100)]
+for i in range(100):
+    y[i] = E64.from_u(99 - i)
+r = x[::-1]
+
+print_array(x)
+print_array(y)
+print_array(r)
