@@ -2,17 +2,16 @@
     .balign 4
     .global vmadc_vim
 vmadc_vim:
-    vsetvli t0, a0, e256, m1, ta, ma
-    vle256.v v1, (a1)
+    vsetvli t0, a0, e32, m2, ta, ma
+    vle32.v v2, (a1)
       sub a0, a0, t0
-      slli t0, t0, 5
-      add a1, a1, t0
+      slli t1, t0, 2
+      add a1, a1, t1
     vlm.v v0, (a2)
-      srli t1, t0, 8
+      srli t1, t0, 3
       add a2, a2, t1
-    vmadc.vim v2, v1, 15
-    vsetivli t0, 1, e8, m1, ta, ma
-    vse8.v v2, (a3)
-      add a3, a3, t0
+    vmadc.vim v4, v2, 15, v0
+    vsm.v v4, (a3)
+      add a3, a3, t1
       bnez a0, vmadc_vim
       ret

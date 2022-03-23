@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmadc_vx(size_t n, const uint32_t x[], const uint32_t y, uint8_t z[]);
+void vmsbc_vxm(size_t n, const uint32_t x[], const uint32_t y, const uint8_t m[], uint8_t z[]);
 
 bool get_bit(const uint8_t m[], uint64_t i) {
   uint64_t off = i / 8;
@@ -24,13 +24,14 @@ int main() {
                      0x1fd57d0e, 0xe7e92519, 0x489a49f8, 0xd0d80715, 0xc93e8c98, 0xe5115be1, 0x31a01612, 0x58517d02,
                      0xb9f7d940, 0xbe915aae, 0x385298a1, 0xbbcb23a6, 0x95efef86, 0x452c74a6, 0x33c45910, 0x01e56cc1,
                      0xd2ab539d, 0xe73b246d, 0x86b9c598, 0xa2bc6755};
-  uint64_t y = 0x7fffffffffffffff;
-  uint8_t z[13];
+  uint64_t y = 0x80000000;
+  uint8_t m[13] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+  uint8_t z[13] = {};
 
-  vmadc_vx(100, x, y, z);
+  vmsbc_vxm(100, x, y, m, z);
 
   for (int i = 0; i < 100; i++) {
-    if (get_bit(z, i) != ((uint64_t)x[i] + y >= ((uint64_t)1 << 32))) {
+    if (get_bit(z, i) != (y >= x[i])) {
       return 1;
     }
   }
