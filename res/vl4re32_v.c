@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vl1re16_v(const uint64_t x[], uint64_t y[]);
+void vl4re32_v(uint64_t size, const uint64_t x[], uint64_t y[]);
 
 int main() {
   uint64_t x[32] = {0x783c0a46f5072132, 0xc47449026927167a, 0xde2031c49d3b0407, 0xa0bf58c2bb7dc131, 0xf6b54641bc2fc7a0,
@@ -13,15 +13,10 @@ int main() {
                     0x28975b36be96c0ed, 0xa601fc7ee7cc2b03};
   uint64_t y[32];
 
-  vl1re16_v(x, y);
+  vl4re32_v(32, x, y);
 
-  for (int i = 0; i < 16; i++) {
+  for (int i = 0; i < 32; i++) {
     if (y[i] != x[i]) {
-      return 1;
-    }
-  }
-  for (int i = 16; i < 32; i++) {
-    if (y[i] != 0) {
       return 1;
     }
   }

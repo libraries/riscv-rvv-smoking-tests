@@ -10,12 +10,23 @@ with open('main.config') as f:
 c_riscv_gcc = conf['gcc']
 c_riscv_runner = conf['runner']
 c_riscv_as = conf['as']
+c_spike = conf['spike']
 c_entry = sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/*.c')])
 
 
 def run(entry):
     print(f'run bin/{entry}')
     s = subprocess.call(f'{c_riscv_runner} bin/{entry}', shell=True)
+    assert s == 0
+
+    with open(f'res/{entry}.s') as f:
+        data = f.read()
+    if 'e256' in data:
+        return
+    if 'e512' in data:
+        return
+    print(f'run bin/{entry} by spike')
+    s = subprocess.call(f'{c_spike} --isa RV64GCV pk bin/{entry}', shell=True)
     assert s == 0
 
 

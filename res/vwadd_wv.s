@@ -10,8 +10,8 @@ vwadd_wv:
       add a1, a1, t0
     vle32.v v4, (a2)
       add a2, a2, t0
-    vwadd.wv v1, v2, v4
-    vse64.v v1, (a3)
+    vwadd.wv v6, v2, v4
+    vse64.v v6, (a3)
       add a3, a3, t0
       add a3, a3, t0
       bnez a0, vwadd_wv

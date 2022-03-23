@@ -1,20 +1,15 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vs2r_v(uint8_t x[]);
+void vs2r_v(uint64_t size, uint8_t x[]);
 
 int main() {
   uint8_t x[512] = {};
 
-  vs2r_v(x);
+  vs2r_v(512, x);
 
-  for (int i = 0; i < 256; i++) {
-    if (x[i] != 2) {
-      return 1;
-    }
-  }
-  for (int i = 256; i < 512; i++) {
-    if (x[i] != 3) {
+  for (int i = 0; i < 512; i++) {
+    if (x[i] != 1) {
       return 1;
     }
   }

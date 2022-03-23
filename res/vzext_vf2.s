@@ -2,14 +2,14 @@
     .balign 4
     .global vzext_vf2
 vzext_vf2:
-    vsetvli t0, a0, e256, m1, ta, ma
-    vle128.v v0, (a1)
+    vsetvli t0, a0, e64, m1, ta, ma
+    vle32.v v1, (a1)
       sub a0, a0, t0
-      slli t0, t0, 4
+      slli t0, t0, 2
       add a1, a1, t0
-    vzext.vf2 v1, v0
-    vse256.v v1, (a2)
-      slli t0, t0, 1
+    vzext.vf2 v2, v1
+    vse64.v v2, (a2)
+      add a2, a2, t0
       add a2, a2, t0
       bnez a0, vzext_vf2
       ret

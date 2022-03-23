@@ -2,10 +2,13 @@
     "gcc": "/home/ubuntu/app/riscv-v/bin/riscv64-unknown-elf-gcc",
     "runner": "/home/ubuntu/src/ckb-vm/target/debug/examples/int64",
     "as": "target/debug/rvv-as",
+    "spike": "/home/ubuntu/app/riscv/bin/spike",
 
     "help": {
         "gcc": "git clone https://github.com/Imperas/riscv-toolchains.git --branch rvv-1.0.0",
         "runner": "an interpreter that can run rvv program",
-        "as": "riscv assembler"
+        "as": "riscv assembler",
+        "spike": "spike path",
+        "_": ""
     }
 }
