@@ -221,12 +221,13 @@ def gen_vvv():
 #     print_masks(rhs)
 #     print_masks(r)
 
-x = [E64.from_rand() for _ in range(100)]
+x = [E32.from_rand() for _ in range(100)]
+y = [E64.from_rand() for _ in range(100)]
 # y = [E32.from_rand() for _ in range(100)]
 # r = [E64.from_rand() for _ in range(100)]
 # for i in range(100):
 #     r[i] = E64.from_u(x[i].uint).wrapping_sub(E64.from_u(y[i].uint))
 
 print_array(x)
-# print_array(y)
+print_array(y)
 # print_array(r)
