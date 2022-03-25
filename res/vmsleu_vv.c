@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmsle_vv(size_t n, const uint64_t x[], const uint64_t y[], uint8_t z[]);
+void vmsleu_vv(size_t n, const uint64_t x[], const uint64_t y[], uint8_t z[]);
 
 bool get_bit(const uint8_t m[], uint64_t i) {
   uint64_t off = i / 8;
@@ -55,10 +55,10 @@ int main() {
       0x47177816653185fb, 0x2f660cf95ca61d31, 0x78eb7d1053f73d2a, 0x916298e1a4bc788d, 0xb0b6ef4db6780c97};
   uint8_t z[13];
 
-  vmsle_vv(100, x, y, z);
+  vmsleu_vv(100, x, y, z);
 
   for (int i = 0; i < 100; i++) {
-    if (get_bit(z, i) != ((int64_t)x[i] <= (int64_t)y[i])) {
+    if (get_bit(z, i) != (x[i] <= y[i])) {
       return 1;
     }
   }
