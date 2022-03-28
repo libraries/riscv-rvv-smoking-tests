@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmacc_vv(size_t n, const uint64_t x[], const uint64_t y[], const uint64_t z[], uint64_t e[]);
+void vmacc_vx(size_t n, const uint64_t x[], const uint64_t y, const uint64_t z[], uint64_t e[]);
 
 int main() {
   uint64_t x[100] = {
@@ -25,27 +25,7 @@ int main() {
       0x5901f50846c5e578, 0x9db78cafdc45cba2, 0x29780e7b5a7708e4, 0x0048b5e731070c03, 0x59b38f013c0cc4f4,
       0x464cfdff8e02bd17, 0x36dd6b13ac1f64fe, 0x8539fcf2d9f157f8, 0x60944349a9d6b65a, 0x7d5a2306c5288315,
       0x86d0327c2594418b, 0x828a7ee7b9b9adc3, 0x7b91f535d9c02d30, 0x3701bc1dfeea121d, 0xd52cac42c4a8294e};
-  uint64_t y[100] = {
-      0x9484f880956e7483, 0x8a72dfebd4de5fe6, 0xb9ff41f1180a4637, 0xb5c28bfd4a6ca065, 0x85933c8b3e972342,
-      0x6527ddbb07d04453, 0x2b0fe4137f8d316f, 0xd3ee57e9b1e96957, 0x46dcea26f533f473, 0xd8ca615ca2ceac4f,
-      0xedddd457bc00bd49, 0xeb710636f69ef3bf, 0xbda882486608fabd, 0x8cb05f3824392ab4, 0x3aaa33436ca43626,
-      0x8578e88dd73a9b17, 0x61bf765797dd2fff, 0x24ed08235a118219, 0x865b90381b0c89e5, 0x34dbcd2fbfb48d57,
-      0xec48bab398e5f002, 0xd8bdc46d053d8e5d, 0x959eae0beb2c37b9, 0x057e24dbf5f96137, 0xf17fdb9ca0efb4e8,
-      0xfa26bf114398f46c, 0xdce1d68d5e4c8f48, 0xb3d49ef3ea5632cd, 0xe9e8707e24115604, 0xf6d0d19c849e02c0,
-      0xe99e2306d3bc34bb, 0x93c76558815fe6c3, 0x89f245d387b753df, 0xb32e4fc0c9322039, 0x52abaf4b10e03365,
-      0xcf5275c3d02989a5, 0xdcccf8902baa6a32, 0x6d3522bf4c0c5413, 0x812e40e111b9b24a, 0xa96a2085cdd27840,
-      0xae995839686d8915, 0x62bcee321cd0ae8d, 0x9a2360bc3eb27cc9, 0x6b692f0b48271d26, 0xc2f23f47492e4e20,
-      0x0e6a79bb37c4f9c9, 0x80134175f8f89ab8, 0xb29f70c5c162d6ff, 0x70aea681b88f1e2b, 0x77d2cf273f2bf12e,
-      0xd3dde93f71e8fc69, 0x78c434a286c983ce, 0xe06f840443b863c9, 0xd2f76b064d0a5665, 0x8e12df08589353d2,
-      0x4fb844f446793794, 0xcb5f1df8b163944a, 0x0c071131bf7c9c82, 0x5728a33d949c6480, 0x43e224fd5db1d815,
-      0x9ff43e9f8ecc3463, 0xa2fed093c1560f4d, 0xc0711dd5238e1063, 0x0b36b7833148255a, 0x54976f1a7bfbceef,
-      0xb1fff35967988799, 0x747b697c740093de, 0x86c93f59779e2685, 0x48d415b58f18dda2, 0xbf36385b11a4e98a,
-      0x7d9972e7f5b139eb, 0x3325db754f925316, 0x67b2f3e3db85bc93, 0x84d608ab5cc7a859, 0xe3083bce5bdb372a,
-      0x22a818a28632d84e, 0xd41ee422e8d8e05e, 0x07a939d909d876d2, 0xe5db19b53e5a8477, 0x1f20b622fd2e2528,
-      0x5b5ed885f499d8e7, 0x0e7bf52bcdd2679d, 0xa26cae07ad8f807b, 0x087d40a56ccb0621, 0xda6b787c085ca8cb,
-      0xff4bdcc81b868936, 0x2ecb661707ae2f8e, 0x10763812630aed49, 0xf15792534aa12ab7, 0x1ff729fe1ad04335,
-      0x02ed7f3212a12f4d, 0x326f951e75a4fe7f, 0x90c8b523216fa946, 0x78a14b5c80edbc23, 0xc36832a2eb992fad,
-      0x603c3fa4fab06711, 0xb15cb4ba7710d2bc, 0x9b27959ee009e5f9, 0xa73e41290f8df5f1, 0xe2d4b9da84cb98d3};
+  uint64_t y = 0x9484f880956e7483;
   uint64_t z[100] = {
       0x0c5355613421a672, 0xdb811ac9eb40f02e, 0xd812d332d29f77ae, 0xc48a02a8e4ac5f87, 0xc279e4c305ce9b00,
       0x4141fdfab4c2ad0a, 0xe21708bd7ec89edd, 0x2f0a5e081520ce0a, 0x1ab902e8a7d02615, 0x639d0928a7b6376e,
@@ -69,10 +49,10 @@ int main() {
       0x9fb69c2a2fc3571f, 0x68e8010f7515e1e7, 0x33b8db195cf04fa6, 0xbe1ba8ab67cede69, 0x1640221e094abe4e};
   uint64_t e[100] = {};
 
-  vmacc_vv(100, x, y, z, e);
+  vmacc_vx(100, x, y, z, e);
 
   for (int i = 0; i < 100; i++) {
-    if (e[i] != ((int64_t)x[i] * (int64_t)y[i] + (int64_t)z[i])) {
+    if (e[i] != ((int64_t)x[i] * (int64_t)y + (int64_t)z[i])) {
       return 1;
     }
   }

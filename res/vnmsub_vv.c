@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmacc_vv(size_t n, const uint64_t x[], const uint64_t y[], const uint64_t z[], uint64_t e[]);
+void vnmsub_vv(size_t n, const uint64_t x[], const uint64_t y[], const uint64_t z[], uint64_t e[]);
 
 int main() {
   uint64_t x[100] = {
@@ -69,10 +69,10 @@ int main() {
       0x9fb69c2a2fc3571f, 0x68e8010f7515e1e7, 0x33b8db195cf04fa6, 0xbe1ba8ab67cede69, 0x1640221e094abe4e};
   uint64_t e[100] = {};
 
-  vmacc_vv(100, x, y, z, e);
+  vnmsub_vv(100, x, y, z, e);
 
   for (int i = 0; i < 100; i++) {
-    if (e[i] != ((int64_t)x[i] * (int64_t)y[i] + (int64_t)z[i])) {
+    if (e[i] != (-(int64_t)y[i] * (int64_t)z[i] + (int64_t)x[i])) {
       return 1;
     }
   }

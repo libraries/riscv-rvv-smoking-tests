@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void vmacc_vv(size_t n, const uint64_t x[], const uint64_t y[], const uint64_t z[], uint64_t e[]);
+void vmadd_vv(size_t n, const uint64_t x[], const uint64_t y[], const uint64_t z[], uint64_t e[]);
 
 int main() {
   uint64_t x[100] = {
@@ -9,7 +9,7 @@ int main() {
       0x3405ccf38eefdc7a, 0xc3bd8f27342cd9db, 0xfff446694c47e4f4, 0xa3776d1325aafbba, 0x813f81fd8ae2ab75,
       0x218f8ec4114ae36b, 0x8e3210db6f232d2f, 0xccaf3c88e85d1355, 0xbea78ae697c7bde5, 0xfc98d2da913233c9,
       0x189ea39d829af5ff, 0x87b9c32296fbbcac, 0x9a576ca41e9e8c35, 0xcc93abbb6d809432, 0x0d10c182bf3bee6e,
-      0xeab5a49d2d94c98f, 0xce57fd13deb8ce2e, 0xf2123d3c0f652acc, 0x2b5957ad8bb6b305, 0x4918687f0981f515,
+      0xeab5a49d2d94c98f, 0xce57fd13deb8ce2e, 0xf2123d3c0f652add, 0x2b5957ad8bb6b305, 0x4918687f0981f515,
       0xc55918d2ffcb286c, 0xb2bf23d171e56673, 0xd499d82fb0e488f6, 0x4a5043847e013ecc, 0x44331942eecb2d79,
       0x7b8e0f1677cf507b, 0x22a8ff64a686651a, 0x34341283c89dd1f5, 0x1d88726f48a6c407, 0x8656a2d4df686330,
       0xc654d8efe54ca0fb, 0x74aef372abf9d386, 0xb52cc88a04f529db, 0x55d1eb57a6ee7f08, 0x9bd760bee43bb89d,
@@ -69,10 +69,10 @@ int main() {
       0x9fb69c2a2fc3571f, 0x68e8010f7515e1e7, 0x33b8db195cf04fa6, 0xbe1ba8ab67cede69, 0x1640221e094abe4e};
   uint64_t e[100] = {};
 
-  vmacc_vv(100, x, y, z, e);
+  vmadd_vv(100, x, y, z, e);
 
   for (int i = 0; i < 100; i++) {
-    if (e[i] != ((int64_t)x[i] * (int64_t)y[i] + (int64_t)z[i])) {
+    if (e[i] != ((int64_t)y[i] * (int64_t)z[i] + (int64_t)x[i])) {
       return 1;
     }
   }
