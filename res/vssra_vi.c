@@ -1,0 +1,40 @@
+#include <stddef.h>
+#include <stdint.h>
+
+void vssra_vi(size_t n, const uint64_t x[], uint64_t y[]);
+
+int main() {
+  uint64_t x[100] = {
+      0xba41a7a89a00946e, 0x818d7bf9ec4381a0, 0xa7b460df8550bd76, 0x48ad46e8c70f68ca, 0xa09a26224807e1b4,
+      0x235b2e923c480ff5, 0x49442b3a9a543494, 0xd656c6755b9d1fe0, 0x4454ef6a3c747f6c, 0x6404ebc44b70b4f0,
+      0x932b865e9915aeeb, 0x6f09d0a7c09eee0c, 0xb2f68d2679a03d6d, 0x263fa74708e651cf, 0x36b28f6dbad957e7,
+      0x57498ac15371ed2a, 0x57cf1fef0aa72fba, 0x717f256dc9010461, 0x2a07f78e78db775f, 0x973b6daeb1a7bdf1,
+      0x3a97ed43869fea1e, 0xdadde75e6817e8a4, 0xa231fb8e2dda9344, 0x31c376b2fd593a59, 0xfd48b44b1e62bde9,
+      0x37afde6d1f88edfc, 0x663e45a35f397956, 0x50955d2df4578f06, 0xd59a05dcd42874f4, 0x316fae18f9ee1df9,
+      0xc605af9c02ebe282, 0xce2ebaede0250462, 0x45a85de2bf94e657, 0x6f3055a97571421c, 0x3f08a626eff96bb5,
+      0xaf98e7d5142bab99, 0x4a1b74934ed4d05f, 0x4bd2071045b5c877, 0x9be8b90988329d88, 0xa9287149d50b5cd6,
+      0x11d6d0e1abbdfb66, 0x62a4f3e9b330d79d, 0x4e951ea0e7251367, 0xb910118f3f4bd3b6, 0x5b161420243c0673,
+      0x4febd00791d6d467, 0xfaabdf0ec4c7781a, 0xd57638863cc46677, 0x2da79891476a3d0b, 0xe367e6b98ebc168c,
+      0x29570dfdecc7a418, 0x74d29e631cf54728, 0x8ecd2b1829559137, 0x944937da558a2c00, 0xb51751006095cb2a,
+      0x6b6efc9b8d9e60a2, 0x43fed7116773edae, 0xd753c4264b624f26, 0xb7d0f45c6d2dfa00, 0x91acd268fec199e8,
+      0x4d2d0f4e88b18eea, 0xa15b4f96d336d440, 0x2163cdd289c2edfe, 0x4391c04bcefb48ff, 0x6bc01aa56e742025,
+      0x068233ec330420bb, 0x57c2630d7a5c9914, 0x7260a5f9a5f3c3f9, 0xe1ea732a06cd2f2a, 0x5b2aca1050cdab0b,
+      0x4494620205d1e33a, 0xb73c2d9518774483, 0x1250442218eb8e1f, 0x66c8784ca29ce4e9, 0x35e492f457d51f4c,
+      0x2aafae91b9da0287, 0x401552ee1eb14e8f, 0xc81e24ecef1b16c9, 0x58f8ec91bb8b106a, 0x8ffd158956b6407c,
+      0xbebf1334d42267a8, 0x36bddcdfd968d10e, 0x688d015a83e6d07c, 0x550cb4fac71550f4, 0xb326c61bd9556a1e,
+      0x81be9036a6b58e8b, 0xdfe8c6a4e647f40d, 0x629ffb55908fb29e, 0x8de62a0b85f75dd1, 0x65edb63fa3de84b1,
+      0x38ffd1fd3f8451f9, 0x774c32289e6ac3b6, 0x474d7f5fc8024263, 0x4f9a54cc30ae0e4d, 0xdbe91ccce5506d30,
+      0xa3dd7cac75ca508d, 0x7e45bae9b8a0f021, 0x85d3e688e8268110, 0x37f23da6963fab0c, 0x4f43184ee90ba823};
+  uint64_t y[100];
+
+  vssra_vi(100, x, y);
+
+  for (int i = 0; i < 100; i++) {
+    uint64_t r = (int64_t)x[i] >> 1;
+    if ((y[i] != r) && (y[i] != r + 1)) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
