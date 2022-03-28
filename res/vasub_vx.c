@@ -1,0 +1,41 @@
+#include <stddef.h>
+#include <stdint.h>
+
+void vasub_vx(size_t n, const uint64_t x[], const uint64_t y, uint64_t z[]);
+
+int main() {
+  uint64_t x[100] = {
+      0xf2bb496f10257875, 0xca6fe768508b4e41, 0x001937fdca721bf1, 0x754489b20ce478f0, 0x4c2e082c7224cb54,
+      0x1e7fbdf30e7f7848, 0x06976b2b5f7ba5f8, 0x68aca48659abe0a8, 0x9878f621d0c3bc4e, 0x62b5d4402ece019e,
+      0x86c16df8cd7e8df9, 0x894ea21977d69ce5, 0x53b06d1aefac910c, 0xc3af2250558c1344, 0x09a694c85439447e,
+      0xb69c1f47e43a50f4, 0x8f0c09508f2fa1ba, 0x2f29dc383c30f62d, 0x58603a3ec1034d40, 0x6f5724fc72fe543b,
+      0x79b7b8530398745a, 0x0b15885b9cca04b3, 0xc719159e89ed576a, 0xb34c6628dcdbc02e, 0x1866c9989ac499c8,
+      0x3dc93b4996416b35, 0xf883df5d58951e6d, 0xb2b59f2921c0617e, 0x6bd5e31fc0910eac, 0x6381485a378deca2,
+      0x8de93422858ed026, 0xbaa587e0835f37b5, 0xe39c2eeeacd2bd4b, 0x40e10c283f79fa31, 0x09c75bf1d75f1709,
+      0xbf82f6b78d6a1808, 0x5cf9bcd7f2018e4d, 0xe74ed69f416f2817, 0x0b63f46807097a7d, 0x0e4ba3d01ca00b29,
+      0x180619154b861286, 0xcbb29f78e7518d0b, 0xfa324823c800e0ff, 0x7de9e7193d951661, 0x029692bdaf80b940,
+      0x3e543290d248d124, 0xe768b7792f83102e, 0xf3566b3a27f04c81, 0x54af8813f59566d6, 0x181fdb741276fdb4,
+      0x22d139208ad4432c, 0x76e0b0215d5d472e, 0x3c1c4a2d09d6cae4, 0x3cb931ac0e153da3, 0xe5b8ef5aeae06dad,
+      0x02cbfb60c93ad7fe, 0x74f6b43cc73cd8ec, 0x1e31712f2829657e, 0x385d93cc29e9e719, 0x51f099c90f375c7e,
+      0x2f5c0dcf856fc884, 0xf9f6e75dde69e7c1, 0x1218ddc7bd7537c7, 0xa950e91db2d8451f, 0xd5d30b8607b922bd,
+      0xbde3b9a66f919f9f, 0x62a3126a5b135599, 0xd298222cbae7fc71, 0xa383c924ef5efc4e, 0x06207acb28afe576,
+      0x3b08d50b206be908, 0x37ec9560ce60bc90, 0x66e9869d6e4c136d, 0xa98bdf1084fd3fb4, 0x1563adee6bfb36b2,
+      0xbe6c42c3936f84a6, 0xe5037511bf21ed17, 0x2375395312c54573, 0x15d32b5ab9f0b705, 0x4910779779d4cd20,
+      0x00c38c347566153a, 0x921f277b8ee3624a, 0x61babc1ccf0bea55, 0xdf7a45c32c0b2c68, 0x4120cc3961f1eb31,
+      0x2b2622ba8319d44a, 0xefe71f9c13ef9e7a, 0x9a8723deee45a720, 0x75bbfa7c2d7d8620, 0xc1a1f2090ecf1611,
+      0x52833cb94b0fbae3, 0xb7d57e2f64fc15cd, 0xb00efbd301d55474, 0x9369b089edbeabc0, 0x77426fd57fe7dbe0,
+      0xca050041e55393fc, 0x5f61efd9f4f040c0, 0x6bc49c749d7b8d3c, 0x8a0aa6ff73e8ce48, 0x337159505fa43813};
+  uint64_t y = 0xba41a7a89a00946e;
+  uint64_t z[100] = {};
+
+  vasub_vx(100, x, y, z);
+
+  for (int i = 0; i < 100; i++) {
+    uint64_t r = (int64_t)(((__int128)(int64_t)x[i] - (__int128)(int64_t)y) >> 1);
+    if ((z[i] != r) && (z[i] != r + 1)) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
