@@ -9,8 +9,8 @@ vmxor_mm:
       add a1, a1, t0
     vlm.v v2, (a2)
       add a2, a2, t0
-    vmxor.mm v0, v1, v2
-    vsm.v v0, (a3)
+    vmxor.mm v3, v1, v2
+    vsm.v v3, (a3)
       add a3, a3, t0
       bnez a0, vmxor_mm
       ret
