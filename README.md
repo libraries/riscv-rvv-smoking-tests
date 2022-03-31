@@ -44,6 +44,9 @@ $ cargo build
 ## Build and Run the tests
 
 ```sh
+$ cp main.config.template main.config
+# Change the config file
+
 $ python main.py build
 $ python main.py run
 ```

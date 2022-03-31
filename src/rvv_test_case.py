@@ -107,35 +107,35 @@ class Eint:
             b = ((1 << shamt) - 1) << (self.bits - shamt)
             return self.__class__.from_u(a | b)
 
-    def seq(self, other: Eint) -> bool:
-        return self.uint == other.uint
+    # def seq(self, other: Eint) -> bool:
+    #     return self.uint == other.uint
 
-    def sne(self, other: Eint) -> bool:
-        return self.uint != other.uint
+    # def sne(self, other: Eint) -> bool:
+    #     return self.uint != other.uint
 
-    def slt(self, other: Eint) -> bool:
-        return self.sint < other.sint
+    # def slt(self, other: Eint) -> bool:
+    #     return self.sint < other.sint
 
-    def sgt(self, other: Eint) -> bool:
-        return self.sint > other.sint
+    # def sgt(self, other: Eint) -> bool:
+    #     return self.sint > other.sint
 
-    def sltu(self, other: Eint) -> bool:
-        return self.uint < other.uint
+    # def sltu(self, other: Eint) -> bool:
+    #     return self.uint < other.uint
 
-    def sgtu(self, other: Eint) -> bool:
-        return self.uint > other.uint
+    # def sgtu(self, other: Eint) -> bool:
+    #     return self.uint > other.uint
 
-    def sle(self, other: Eint) -> bool:
-        return self.sint <= other.sint
+    # def sle(self, other: Eint) -> bool:
+    #     return self.sint <= other.sint
 
-    def sge(self, other: Eint) -> bool:
-        return self.sint >= other.sint
+    # def sge(self, other: Eint) -> bool:
+    #     return self.sint >= other.sint
 
-    def sleu(self, other: Eint) -> bool:
-        return self.uint <= other.uint
+    # def sleu(self, other: Eint) -> bool:
+    #     return self.uint <= other.uint
 
-    def sgeu(self, other: Eint) -> bool:
-        return self.uint >= other.uint
+    # def sgeu(self, other: Eint) -> bool:
+    #     return self.uint >= other.uint
 
     # __add__ = add
     # __sub__ = sub
