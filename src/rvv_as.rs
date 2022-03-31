@@ -185,13 +185,6 @@ fn conv(line: &str) {
             println!("{}# {}", indent, text);
             println!("{}{}", indent, emit(code));
         }
-        "vlm.v" => {
-            let mut code = 0b000_000_1_01011_00000_000_00000_0000111;
-            code |= (vegn(args[0]) as u32) << 7;
-            code |= (regn(args[1].trim_start_matches('(').trim_end_matches(')')) as u32) << 15;
-            println!("{}# {}", indent, text);
-            println!("{}{}", indent, emit(code));
-        }
         "vse128.v" => {
             let mut code = 0b000_100_0_00000_00000_000_00000_0100111;
             code |= (vegn(args[0]) as u32) << 7;
