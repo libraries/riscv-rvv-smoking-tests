@@ -1,10 +1,46 @@
-# RVV Playground
+# RISC-V RVV Smoking tests
 
-## Installation
+Provides smoking tests and bench for RISC-V V Extension.
 
-### Install gnu toolchain
+## Installation(way 1)
 
 ```sh
+# Install RISC-V gnu toolchain
+$ git clone https://github.com/Imperas/riscv-toolchains.git --branch rvv-1.0.0
+
+# Install spike
+$ git clone https://github.com/riscv-software-src/riscv-isa-sim
+$ cd riscv-isa-sim
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/home/ubuntu/app/riscv
+$ make
+$ make install
+
+# Create main.config
+$ cp main.config.template main.config
+
+# Build rvv-as
+$ cargo build
+
+# Build tests
+$ python main.py build
+
+# Run tests by spike. Passed if it returns 0.
+$ spike --isa=RV64GCV pk vadd_vv
+
+# Install ckb-vm/examples/int64
+$ git clone -b rvv https://github.com/nervosnetwork/ckb-vm.git
+$ cargo build --example int64
+
+# Run all
+$ python main.py run
+```
+
+## Installation(way 2)
+
+```sh
+# Install RISC-V gnu toolchain
 $ git clone --branch rvv-intrinsic https://github.com/riscv-collab/riscv-gnu-toolchain
 $ cd riscv-gnu-toolchain
 $ rm -rf riscv-glibc
@@ -13,40 +49,7 @@ $ git submodule update --init
 $ ./configure --prefix=$HOME/app/riscv_rvv --with-arch=rv64gcv
 $ make newlib
 $ make build-qemu
-```
 
-### Usage of qemu
-
-```sh
+# Usage of qemu
 $ qemu-riscv64 -cpu rv64,x-v=true USER_PROGRAM
-```
-
-### Usage of spike
-
-```sh
-$ spike --isa=RV64GCV pk vadd_vv_32
-```
-
-### Install `ckb-vm/examples/int64`
-
-```sh
-$ git clone -b rvv https://github.com/nervosnetwork/ckb-vm.git
-$ cargo build --example int64
-```
-
-### Install `rvv-as`
-
-```sh
-$ git clone https://github.com/TheWaWaR/rvv-encoder
-$ cargo build
-```
-
-## Build and Run the tests
-
-```sh
-$ cp main.config.template main.config
-# Change the config file
-
-$ python main.py build
-$ python main.py run
 ```
