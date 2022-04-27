@@ -8,6 +8,7 @@ import subprocess
 with open('main.config') as f:
     conf = json.load(f)
 c_riscv_gcc = conf['gcc']
+c_riscv_gcc_build_args = conf['gcc_build_args']
 c_riscv_runner = conf['runner']
 c_riscv_as = conf['as']
 c_spike = conf['spike']
@@ -34,7 +35,7 @@ def build(entry):
     print(f'build bin/{entry}')
     s = subprocess.call(f'{c_riscv_as} res/{entry}.s > bin/{entry}_emit.s', shell=True)
     assert s == 0
-    s = subprocess.call(f'{c_riscv_gcc} -march=rv64imcv -c bin/{entry}_emit.s -o bin/{entry}.o', shell=True)
+    s = subprocess.call(f'{c_riscv_gcc} {c_riscv_gcc_build_args} -c bin/{entry}_emit.s -o bin/{entry}.o', shell=True)
     assert s == 0
     s = subprocess.call(f'{c_riscv_gcc} res/{entry}.c -o bin/{entry} bin/{entry}.o', shell=True)
     assert s == 0

@@ -39,6 +39,8 @@ $ python main.py run
 
 ## Installation(way 2)
 
+Supplement for way 1. If you are using a non-Linux64 os, it means that you cannot use the precompiled gnu toolchain. So you need to compile it yourself.
+
 ```sh
 # Install RISC-V gnu toolchain
 $ git clone --branch rvv-intrinsic https://github.com/riscv-collab/riscv-gnu-toolchain
@@ -52,4 +54,22 @@ $ make build-qemu
 
 # Usage of qemu
 $ qemu-riscv64 -cpu rv64,x-v=true USER_PROGRAM
+```
+
+## Installation(way 3)
+
+If you really don't want to use rvv's gnu toolchain, plain riscv64-unknown-elf-gcc can be used as an alternative.
+
+```sh
+$ cargo install rvv-as
+
+$ vim main.config
+```
+
+```json
+{
+    "gcc": "riscv64-unknown-elf-gcc",
+    "gcc_build_args": "-march=rv64gc",
+    "as": "/home/ubuntu/.cargo/bin/rvv-as",
+}
 ```
