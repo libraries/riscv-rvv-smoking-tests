@@ -2,8 +2,10 @@
     "gcc": "/home/ubuntu/app/riscv-v/bin/riscv64-unknown-elf-gcc",
     "gcc_build_args": "-march=rv64imcv",
     "runner": "/home/ubuntu/src/ckb-vm/target/debug/examples/int64",
-    "as": "target/debug/rvv-as",
+    "as": "/home/ubuntu/src/rvv-encoder/bin/rvv-as",
     "spike": "/home/ubuntu/app/riscv/bin/spike",
+    "spike_args": "--isa RV64GCV_ZBA_ZBB_ZBC_ZBS",
+    "spike_enable": false,
 
     "help": {
         "gcc": "git clone https://github.com/Imperas/riscv-toolchains.git --branch rvv-1.0.0",
