@@ -5,7 +5,7 @@ import os.path
 import sys
 import subprocess
 
-with open('main.config') as f:
+with open('main.json') as f:
     conf = json.load(f)
 c_riscv_gcc = conf['gcc']
 c_riscv_gcc_build_args = conf['gcc_build_args']
@@ -22,6 +22,8 @@ if not os.path.exists('bin'):
     os.mkdir('bin')
 if not os.path.exists('bin/bn'):
     os.mkdir('bin/bn')
+if not os.path.exists('bin/error'):
+    os.mkdir('bin/error')
 if not os.path.exists('bin/standard'):
     os.mkdir('bin/standard')
 
