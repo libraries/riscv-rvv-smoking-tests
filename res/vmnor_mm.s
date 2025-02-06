@@ -2,7 +2,7 @@
     .balign 4
     .global vmnor_mm
 vmnor_mm:
-    vsetvli t0, a0, e256, m1, ta, ma
+    vsetvli t0, a0, e32, m1, ta, ma
     vlm.v v1, (a1)
       sub a0, a0, t0
       srli t0, t0, 3

@@ -2,7 +2,7 @@
     .balign 4
     .global vmnand_mm
 vmnand_mm:
-    vsetvli t0, a0, e16, m1, ta, ma
+    vsetvli t0, a0, e32, m1, ta, ma
     vlm.v v1, (a1)
       sub a0, a0, t0
       srli t0, t0, 3
