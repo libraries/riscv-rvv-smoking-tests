@@ -1,0 +1,13 @@
+{
+    "gcc": "riscv64-unknown-elf-gcc",
+    "gcc_build_args": "-march=rv64imcv",
+    "runner": "qemu-riscv64",
+    "as": "python src/rvv_as.py",
+
+    "help": {
+        "gcc": "git clone https://github.com/Imperas/riscv-toolchains.git --branch rvv-1.0.0",
+        "gcc_build_args": "used for building asm to binary",
+        "runner": "an interpreter that can run rvv program",
+        "as": "riscv assembler"
+    }
+}

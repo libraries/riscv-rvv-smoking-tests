@@ -107,127 +107,53 @@ class Eint:
             b = ((1 << shamt) - 1) << (self.bits - shamt)
             return self.__class__.from_u(a | b)
 
-    # def seq(self, other: Eint) -> bool:
-    #     return self.uint == other.uint
-
-    # def sne(self, other: Eint) -> bool:
-    #     return self.uint != other.uint
-
-    # def slt(self, other: Eint) -> bool:
-    #     return self.sint < other.sint
-
-    # def sgt(self, other: Eint) -> bool:
-    #     return self.sint > other.sint
-
-    # def sltu(self, other: Eint) -> bool:
-    #     return self.uint < other.uint
-
-    # def sgtu(self, other: Eint) -> bool:
-    #     return self.uint > other.uint
-
-    # def sle(self, other: Eint) -> bool:
-    #     return self.sint <= other.sint
-
-    # def sge(self, other: Eint) -> bool:
-    #     return self.sint >= other.sint
-
-    # def sleu(self, other: Eint) -> bool:
-    #     return self.uint <= other.uint
-
-    # def sgeu(self, other: Eint) -> bool:
-    #     return self.uint >= other.uint
-
-    # __add__ = add
-    # __sub__ = sub
-    # __mul__ = mul
-    # __floordiv__ = divu
-    # __truediv__ = divu
-    # __mod__ = remu
-    # __lt__ = sltu
-    # __gt__ = sgtu
-    # __le__ = sleu
-    # __ge__ = sgeu
-    # __eq__ = seq
-    # __ne__ = sne
-    # __lshift__ = sll
-    # __rshift__ = srl
 
 class E8(Eint):
     bits = 8
 
+
 class E16(Eint):
     bits = 16
+
 
 class E32(Eint):
     bits = 32
 
+
 class E64(Eint):
     bits = 64
+
 
 class E128(Eint):
     bits = 128
 
+
 class E256(Eint):
     bits = 256
+
 
 class E512(Eint):
     bits = 512
 
+
 class E1024(Eint):
     bits = 1024
+
 
 def print_array(u: typing.List[Eint]):
     print('{' + ','.join([repr(e) for e in u]) + '}')
 
+
 def print_masks(u: typing.List[int]):
     print('{' + ','.join([f'0x{e:02x}' for e in u]) + '}')
 
-def gen_vvv():
-    x = [E32.from_rand() for _ in range(100)]
-    y = [E32.from_rand() for _ in range(100)]
-    r = [E64.from_rand() for _ in range(100)]
-    for i in range(100):
-        r[i] = E64.from_u((E64.from_i(-2 * y[i].uint).uint + z[i].uint) % (1 << 64))
-    print_array(x)
-    print_array(y)
-    print_array(r)
 
-# def gen_mvv():
-#     lhs = [U256.from_rand() for _ in range(96)]
-#     rhs = [U256.from_rand() for _ in range(96)]
-#     r = [0 for _ in range(12)]
-#     for i in range(96):
-#         if i % 3 == 0:
-#             lhs[i] = U256.from_i(-(1 << 255) + random.randint(0, 0x7fffffffffffffff))
-#     #     rhs[i] = U256.from_u(0x7fffffffffffffff)
-#     def f(x: Eint, y: Eint):
-#         cond_a = x.sint - 0x7fffffffffffffff > (1 << 255) - 1
-#         cond_b = x.sint - 0x7fffffffffffffff < -(1 << 255)
-#         return cond_a | cond_b
-#     for i in range(96):
-#         if f(lhs[i], rhs[i]):
-#             r[i // 8] |= 1 << (i % 8)
-#     print_array(lhs)
-#     print_array(rhs)
-#     print_masks(r)
-
-# def gen_mmm():
-#     lhs = [random.randint(0, 0xff) for _ in range(12)]
-#     rhs = [random.randint(0, 0xff) for _ in range(12)]
-#     r = [0 for _ in range(12)]
-#     for i in range(12):
-#         r[i] = 255 - (lhs[i] ^ rhs[i])
-#     print_masks(lhs)
-#     print_masks(rhs)
-#     print_masks(r)
-
-x = [E32.from_rand() for _ in range(100)]
+x = [E64.from_rand() for _ in range(100)]
 y = [E64.from_rand() for _ in range(100)]
-# y = [E32.from_rand() for _ in range(100)]
-# r = [E64.from_rand() for _ in range(100)]
-# for i in range(100):
-#     r[i] = E64.from_u(x[i].uint).wrapping_sub(E64.from_u(y[i].uint))
+r = [E64.from_rand() for _ in range(100)]
+for i in range(100):
+    r[i] = x[i].wrapping_add(y[i])
 
 print_array(x)
 print_array(y)
-# print_array(r)
+print_array(r)

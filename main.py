@@ -5,68 +5,42 @@ import os.path
 import sys
 import subprocess
 
-with open('main.config') as f:
+with open('main.json') as f:
     conf = json.load(f)
 c_riscv_gcc = conf['gcc']
 c_riscv_gcc_build_args = conf['gcc_build_args']
 c_riscv_runner = conf['runner']
 c_riscv_as = conf['as']
-c_spike = conf['spike']
-c_spike_args = conf['spike_args']
-c_spike_enable = conf['spike_enable']
-c_entry = sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/*.c')])
 
 
-def run(entry):
-    print(f'run bin/{entry}')
-    s = subprocess.call(f'{c_riscv_runner} bin/{entry}', shell=True)
-    assert s == 0
-
-    if c_spike_enable:
-        with open(f'res/{entry}.s') as f:
-            data = f.read()
-        if 'e256' in data:
-            return
-        if 'e512' in data:
-            return
-        print(f'run bin/{entry} by spike')
-        s = subprocess.call(f'{c_spike} {c_spike_args} pk bin/{entry}', shell=True)
-        assert s == 0
-
-
-def build(entry):
-    print(f'build bin/{entry}')
-    s = subprocess.call(f'{c_riscv_as} res/{entry}.s > bin/{entry}_emit.s', shell=True)
-    assert s == 0
-    s = subprocess.call(f'{c_riscv_gcc} {c_riscv_gcc_build_args} -c bin/{entry}_emit.s -o bin/{entry}.o', shell=True)
-    assert s == 0
-    s = subprocess.call(f'{c_riscv_gcc} res/{entry}.c -o bin/{entry} bin/{entry}.o', shell=True)
-    assert s == 0
-
-
-def fmt(entry):
-    print(f'fmt res/{entry}.c')
-    s = subprocess.call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/{entry}.c', shell=True)
-    assert s == 0
+def call(c: str):
+    print('$', c)
+    return subprocess.run(c, check=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
 if not os.path.exists('bin'):
-    print('mkdir bin/')
     os.mkdir('bin')
+if not os.path.exists('bin/bn'):
+    os.mkdir('bin/bn')
+if not os.path.exists('bin/error'):
+    os.mkdir('bin/error')
+if not os.path.exists('bin/standard'):
+    os.mkdir('bin/standard')
 
 for sub in sys.argv[1:]:
-    if sub == 'build':
-        for i in c_entry:
-            build(i)
-    if sub == 'run':
-        for i in c_entry:
-            if 'bench' in i:
-                continue
-            run(i)
     if sub == 'fmt':
-        for i in c_entry:
-            fmt(i)
-    if sub in c_entry:
-        build(sub)
-        run(sub)
-        fmt(sub)
+        for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/bn/*.c')]):
+            call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/bn/{e}.c')
+        for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/standard/*.c')]):
+            call(f'clang-format --style="{{ColumnLimit: 120}}" -i res/standard/{e}.c')
+    if sub == 'build':
+        for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/bn/*.c')]):
+            call(f'{c_riscv_as} res/bn/{e}.s > bin/bn/{e}.s')
+            call(f'{c_riscv_gcc} {c_riscv_gcc_build_args} -c bin/bn/{e}.s -o bin/bn/{e}.o')
+            call(f'{c_riscv_gcc} res/bn/{e}.c -o bin/bn/{e} bin/bn/{e}.o')
+        for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/standard/*.c')]):
+            call(f'{c_riscv_gcc} {c_riscv_gcc_build_args} -c res/standard/{e}.s -o bin/standard/{e}.o')
+            call(f'{c_riscv_gcc} res/standard/{e}.c -o bin/standard/{e} bin/standard/{e}.o')
+    if sub == 'run':
+        for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/standard/*.c')]):
+            call(f'{c_riscv_runner} bin/standard/{e}')
