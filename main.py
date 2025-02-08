@@ -22,8 +22,6 @@ if not os.path.exists('bin'):
     os.mkdir('bin')
 if not os.path.exists('bin/bn'):
     os.mkdir('bin/bn')
-if not os.path.exists('bin/error'):
-    os.mkdir('bin/error')
 if not os.path.exists('bin/standard'):
     os.mkdir('bin/standard')
 
@@ -37,10 +35,10 @@ for sub in sys.argv[1:]:
         for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/bn/*.c')]):
             call(f'{c_riscv_as} res/bn/{e}.s > bin/bn/{e}.s')
             call(f'{c_riscv_gcc} {c_riscv_gcc_build_args} -c bin/bn/{e}.s -o bin/bn/{e}.o')
-            call(f'{c_riscv_gcc} res/bn/{e}.c -o bin/bn/{e} bin/bn/{e}.o')
+            call(f'{c_riscv_gcc} res/bn/{e}.c bin/bn/{e}.o -o bin/bn/{e}')
         for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/standard/*.c')]):
             call(f'{c_riscv_gcc} {c_riscv_gcc_build_args} -c res/standard/{e}.s -o bin/standard/{e}.o')
-            call(f'{c_riscv_gcc} res/standard/{e}.c -o bin/standard/{e} bin/standard/{e}.o')
+            call(f'{c_riscv_gcc} res/standard/{e}.c bin/standard/{e}.o -o bin/standard/{e}')
     if sub == 'run':
         for e in sorted([os.path.splitext(os.path.basename(i))[0] for i in glob.glob('res/standard/*.c')]):
             call(f'{c_riscv_runner} bin/standard/{e}')
